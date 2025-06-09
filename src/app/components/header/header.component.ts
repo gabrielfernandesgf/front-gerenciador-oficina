@@ -3,13 +3,16 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [
     MenubarModule,
     SelectButtonModule,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
@@ -24,17 +27,17 @@ export class HeaderComponent implements OnInit {
     this.items = [
         {
           label: 'Home',
-          icon: 'pi pi-user',
+          icon: 'pi pi-home',
           routerLink: ['/home']
         },
         {
-          label: 'Lista de ...',
+          label: 'Clientes',
           icon: 'pi pi-users',
-          routerLink: ['/listar']
+          routerLink: ['/clientes']
         },
         {
             label: 'Adicionar ...',
-            icon: 'pi pi-user',
+            icon: 'pi pi-plus',
             routerLink: ['/adicionar']
         }
     ];

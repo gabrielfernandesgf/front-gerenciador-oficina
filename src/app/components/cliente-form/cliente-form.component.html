@@ -1,0 +1,109 @@
+<p-card [header]="isEditMode ? 'Editar Cliente' : 'Adicionar Novo Cliente' ">
+  <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
+
+    <div class="field col-12" *ngIf="!isEditMode">
+      <label class="mb-3">Tipo de Cliente</label>
+      <p-selectButton
+        [options]="tiposDeCliente"
+        formControlName="tipoCliente"
+        optionLabel="label"
+        optionValue="value" />
+    </div>
+
+    <div class="p-fluid p-formgrid grid mt-4">
+      <div class="field col-12">
+        <p-floatlabel>
+          <input pInputText id="nome" formControlName="nome">
+          <label for="nome">Nome</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <p-floatlabel>
+          <input pInputText id="email" formControlName="email">
+          <label for="email">Email</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <p-floatlabel>
+          <input pInputText id="telefone" formControlName="telefone">
+          <label for="telefone">Telefone</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="field col-12">
+        <p-floatlabel>
+          <input pInputText id="endereco" formControlName="endereco">
+          <label for="endereco">Endereço</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <p-floatlabel>
+          <input pInputText id="cep" formControlName="cep">
+          <label for="cep">CEP</label>
+        </p-floatlabel>
+      </div>
+
+<!--      Campos para Pessoa Fisica-->
+      <div class="p-fluid p-formgrid grid" *ngIf="clienteForm.get('tipoCliente')?.value === 'PF'">
+        <div class="field col-12 md:col-6">
+          <p-floatlabel>
+            <input pInputText id="cpf" formControlName="cpf" />
+            <label for="cpf">CPF</label>
+          </p-floatlabel>
+        </div>
+        <div class="field col-12 md:col-6">
+          <p-floatlabel>
+            <input type="date" pInputText id="dataDeNascimento" formControlName="dataDeNascimento" />
+            <label for="dataDeNascimento">Data de Nascimento</label>
+          </p-floatlabel>
+        </div>
+      </div>
+
+<!--      Campos Para Pessoa Juridica -->
+      <div class="p-fluid p-formgrid grid" *ngIf="clienteForm.get('tipoCliente')?.value === 'PJ'">
+        <div class="field col-12 md:col-6">
+          <p-floatlabel>
+            <input pInputText id="cnpj" formControlName="cnpj" />
+            <label for="cnpj">CNPJ</label>
+          </p-floatlabel>
+        </div>
+        <div class="field col-12 md:col-6">
+          <p-floatlabel>
+            <input pInputText id="razaoSocial" formControlName="razaoSocial" />
+            <label for="razaoSocial">Razão Social</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="field col-12">
+          <p-floatlabel>
+            <input pInputText id="inscricaoSocial" formControlName="inscricaoSocial" />
+            <label for="inscricaoSocial">Inscricao Estadual</label>
+          </p-floatlabel>
+        </div>
+        <div class="field col-12 md:col-6">
+          <p-floatlabel>
+            <input pInputText id="nomeResposavel" formControlName="nomeResposavel" />
+            <label for="nomeResposavel">Nome do Responsavel</label>
+          </p-floatlabel>
+        </div>
+        <div class="field col-12 md:col-6">
+          <p-floatlabel>
+            <input pInputText id="contatoResponsavel" formControlName="contatoResponsavel" />
+            <label for="contatoResponsavel">Contato do Responsavel</label>
+          </p-floatlabel>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-3 mt-4 justify-content-end">
+      <p-button type="button" label="Cancelar" (click)="onCancel()" severity="secondary" />
+      <p-button type="submit" label="Salvar" [disabled]="clienteForm.invalid"/>
+    </div>
+
+  </form>
+
+
+</p-card>
