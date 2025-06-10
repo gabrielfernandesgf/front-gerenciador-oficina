@@ -70,33 +70,17 @@ export class MarcaListComponent {
         next: (response) => {
           this.marcas = this.marcas.map(p => p.id === response.id ? response : p);
           this.displayDialogEdit = false;
-          this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Marca atualizada com sucesso!'});
+          this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Atualizado com sucesso!'});
         },
         error: (err) => {
           console.error('Erro ao atualizar marca', err);
-          this.errorMessage = err.error.message || 'Erro ao atualizar a marca';
+          this.errorMessage = err.error.message || 'Erro ao atualizar!';
           this.messageService.add({severity: 'error', summary: 'Erro', detail: this.errorMessage});
         }
       });
     }
   }
-/*
-  deletar(id: number): void {
-    if (confirm('Deseja excluir essa marca?')) {
-      this.marcaService.delete(id).subscribe({
-        next: () => {
-          this.marcas = this.marcas.filter(p => p.id !== id);
-          this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Marca excluída com sucesso!'});
-        },
-        error: (err) => {
-          console.error('Erro ao excluir marca', err);
-          this.errorMessage = err.error.message || 'Erro ao excluir a marca';
-          this.messageService.add({severity: 'error', summary: 'Erro', detail: this.errorMessage});
-        }
-      });
-    }
-  }
-*/
+
   deletar(id: number): void {
     this.confirmationService.confirm({
       message: 'Deseja seguir com a exclusão?',
@@ -107,12 +91,13 @@ export class MarcaListComponent {
       accept: () => {
         this.marcaService.delete(id).subscribe({
           next: () => {
+            this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Excluído com sucesso!'});
             this.marcaService.findAll().subscribe((response: Marca[]) => {
               this.marcas = response;
             });
           },
           error: (err) => {
-            this.errorMessage = err.error.message || 'Erro ao excluir.';
+            this.errorMessage = err.error.message || 'Erro ao excluir!';
             this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.errorMessage });
           }
         });
