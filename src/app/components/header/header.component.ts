@@ -36,9 +36,9 @@ export class HeaderComponent implements OnInit {
           routerLink: ['/clientes']
         },
         {
-            label: 'Adicionar ...',
+            label: 'Marcas',
             icon: 'pi pi-plus',
-            routerLink: ['/adicionar']
+            routerLink: ['/marcas']
         }
     ];
   }

@@ -1,0 +1,13 @@
+.input-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+
+label {
+  margin-right: 5px;
+}
+
+input {
+  margin-right: 15px;
+}

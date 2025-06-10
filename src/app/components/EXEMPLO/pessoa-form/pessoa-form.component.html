@@ -1,0 +1,18 @@
+<app-menu-bar></app-menu-bar>
+<h2>Adicionar Pessoa</h2>
+<form (ngSubmit)="adicionarPessoa()">
+  <div class="input-container">
+    <label for="nome"><strong>Nome: </strong></label>
+    <input id="nome" type="text" pInputText [(ngModel)]="nome" name="nome" required />
+
+    <label for="cpf"><strong>CPF: </strong></label>
+    <input id="cpf" type="text" pInputText [(ngModel)]="cpf" name="cpf" maxlength="11" pattern="[0-9]*"
+      (input)="apenasNumeros($event)" required />
+
+    <label for="email"><strong>E-mail: </strong></label>
+    <input id="email" type="text" pInputText [(ngModel)]="email" name="email" required />
+  </div>
+  <button type="submit" pButton label="Adicionar Pessoa"></button>
+</form>
+
+<p-toast></p-toast>
