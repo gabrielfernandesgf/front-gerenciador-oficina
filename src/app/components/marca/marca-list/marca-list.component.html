@@ -15,9 +15,9 @@
       <td>{{ marca.nome }}</td>
       <td>{{ marca.descricao }}</td>
       <td>
-        <button pButton type="button" label="Visualizar" severity="info" class="button-spacing" (click)="view(marca)"></button>
-        <button pButton type="button" label="Editar" severity="warn" class="button-spacing" (click)="edit(marca)"></button>
-        <button pButton type="button" label="Deletar" severity="danger" class="button-spacing" (click)="deletar(marca.id)"></button>
+        <p-button type="button" label="Visualizar" severity="info" class="button-spacing" (click)="view(marca)"></p-button>
+        <p-button type="button" label="Editar" severity="warn" class="button-spacing" (click)="edit(marca)"></p-button>
+        <p-button label="Excluir" severity="danger" *ngIf="marca.id !== undefined" (click)="deletar(marca.id)"></p-button>
       </td>
     </tr>
   </ng-template>
@@ -30,8 +30,8 @@
     <p><strong>Nome:</strong> {{ marcaSelecionada.nome }}</p>
     <p><strong>CPF:</strong> {{ marcaSelecionada.descricao }}</p>
     <td class="p-dialog-footer">
-      <button pButton type="button" label="Editar" class="p-button-warning button-spacing" (click)="edit(marcaSelecionada)" (click)="displayDialogView=false"></button>
-      <button pButton type="button" label="Deletar" class="p-button-danger" (click)="displayDialogView=false" (click)="deletar(marcaSelecionada.id)"></button>
+      <p-button type="button" label="Editar" severity="warn" class="button-spacing" (click)="edit(marcaSelecionada)" (click)="displayDialogView=false"></p-button>
+      <p-button type="button" label="Deletar" severity="danger" class="button-spacing" (click)="displayDialogView=false" (click)="deletar(marcaSelecionada.id)"></p-button>
     </td>
   </div>
 </p-dialog>
@@ -54,8 +54,8 @@
       </div>
       <br>
       <td class="p-dialog-footer">
-        <button pButton type="submit" label="Salvar" class="p-button-success button-spacing" ></button>
-        <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="displayDialogEdit=false"></button>
+        <p-button type="submit" label="Salvar" severity="success" class="button-spacing" ></p-button>
+        <p-button type="button" label="Cancelar" severity="secondary" class="button-spacing" (click)="displayDialogEdit=false"></p-button>
       </td>
     </div>
   </form>
@@ -67,3 +67,4 @@
 
 <!-- PrimeNG Toast para exibir notificações -->
 <p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

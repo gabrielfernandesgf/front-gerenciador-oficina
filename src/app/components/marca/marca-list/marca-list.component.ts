@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { Marca } from '../../../models/marca';
 import { MarcaService } from '../../../services/marca.service';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-marca-list',
@@ -19,14 +20,14 @@ import { MarcaService } from '../../../services/marca.service';
     TableModule,
     DialogModule,
     FormsModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialog
   ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './marca-list.component.html',
   styleUrl: './marca-list.component.css'
 })
 export class MarcaListComponent {
-
   marcas: Marca[] = [];
   displayDialogView: boolean = false;
   displayDialogEdit: boolean = false;
@@ -35,7 +36,8 @@ export class MarcaListComponent {
   router: any;
   errorMessage: string = '';
 
-  constructor(private marcaService: MarcaService, private messageService: MessageService) {}
+  constructor(private marcaService: MarcaService, private messageService: MessageService,
+              private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
     this.marcaService.findAll().subscribe((response: Marca[]) => {
@@ -78,7 +80,7 @@ export class MarcaListComponent {
       });
     }
   }
-
+/*
   deletar(id: number): void {
     if (confirm('Deseja excluir essa marca?')) {
       this.marcaService.delete(id).subscribe({
@@ -93,5 +95,29 @@ export class MarcaListComponent {
         }
       });
     }
+  }
+*/
+  deletar(id: number): void {
+    this.confirmationService.confirm({
+      message: 'Deseja seguir com a exclusão?',
+      acceptLabel: 'Excluir',
+      rejectLabel: 'Cancelar',
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-secondary',
+      accept: () => {
+        this.marcaService.delete(id).subscribe({
+          next: () => {
+            this.marcaService.findAll().subscribe((response: Marca[]) => {
+              this.marcas = response;
+            });
+          },
+          error: (err) => {
+            this.errorMessage = err.error.message || 'Erro ao excluir.';
+            this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.errorMessage });
+          }
+        });
+        this.displayDialogView = false;
+      }
+    });
   }
 }
