@@ -1,0 +1,97 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { Marca } from '../../../models/marca';
+import { MarcaService } from '../../../services/marca.service';
+
+@Component({
+  selector: 'app-marca-list',
+  imports: [
+    RouterModule,
+    CommonModule,
+    ButtonModule,
+    TableModule,
+    DialogModule,
+    FormsModule,
+    ToastModule
+  ],
+  providers: [MessageService],
+  templateUrl: './marca-list.component.html',
+  styleUrl: './marca-list.component.css'
+})
+export class MarcaListComponent {
+
+  marcas: Marca[] = [];
+  displayDialogView: boolean = false;
+  displayDialogEdit: boolean = false;
+  displayErrorDialog: boolean = false;
+  marcaSelecionada?: Marca;
+  router: any;
+  errorMessage: string = '';
+
+  constructor(private marcaService: MarcaService, private messageService: MessageService) {}
+
+  ngOnInit() {
+    this.marcaService.findAll().subscribe((response: Marca[]) => {
+      this.marcas = response;
+    });
+  }
+
+  view(marca: Marca) {
+    this.marcaSelecionada = marca;
+    this.displayDialogView = true;
+  }
+
+  edit(marca: Marca) {
+    this.marcaSelecionada = { ...marca };
+    this.displayDialogEdit = true;
+  }
+
+  update() {
+    if (this.marcaSelecionada) {
+      if (!this.marcaSelecionada.nome || this.marcaSelecionada.nome.trim() === '') {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'O nome não pode estar vazio.' });
+        return;
+      }
+      if (!this.marcaSelecionada.descricao || this.marcaSelecionada.descricao.trim() === '') {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'A descrição não pode estar vazia.' });
+        return;
+      }
+
+      this.marcaService.update(this.marcaSelecionada).subscribe({
+        next: (response) => {
+          this.marcas = this.marcas.map(p => p.id === response.id ? response : p);
+          this.displayDialogEdit = false;
+          this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Marca atualizada com sucesso!'});
+        },
+        error: (err) => {
+          console.error('Erro ao atualizar marca', err);
+          this.errorMessage = err.error.message || 'Erro ao atualizar a marca';
+          this.messageService.add({severity: 'error', summary: 'Erro', detail: this.errorMessage});
+        }
+      });
+    }
+  }
+
+  deletar(id: number): void {
+    if (confirm('Deseja excluir essa marca?')) {
+      this.marcaService.delete(id).subscribe({
+        next: () => {
+          this.marcas = this.marcas.filter(p => p.id !== id);
+          this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Marca excluída com sucesso!'});
+        },
+        error: (err) => {
+          console.error('Erro ao excluir marca', err);
+          this.errorMessage = err.error.message || 'Erro ao excluir a marca';
+          this.messageService.add({severity: 'error', summary: 'Erro', detail: this.errorMessage});
+        }
+      });
+    }
+  }
+}

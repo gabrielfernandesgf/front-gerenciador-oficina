@@ -5,11 +5,10 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ClienteServiceService} from '../../services/cliente-service.service';
 import {MessageService} from 'primeng/api';
-import {Cliente} from '../../models/cliente';
 import {FloatLabelModule} from 'primeng/floatlabel';
 import { SelectButtonModule} from 'primeng/selectbutton';
+import { ClienteServiceService } from '../../../services/cliente-service.service';
 
 @Component({
   selector: 'app-cliente-form',

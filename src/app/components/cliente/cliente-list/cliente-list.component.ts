@@ -3,12 +3,12 @@ import {CardModule} from 'primeng/card';
 import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
 import {CommonModule} from '@angular/common';
-import {ClienteServiceService} from '../../services/cliente-service.service';
-import {Cliente} from '../../models/cliente';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ToastModule} from 'primeng/toast';
 import {Router} from '@angular/router';
 import {ConfirmationService, MessageService} from 'primeng/api';
+import { ClienteServiceService } from '../../../services/cliente-service.service';
+import { Cliente } from '../../../models/cliente';
 
 @Component({
   selector: 'app-cliente-list',

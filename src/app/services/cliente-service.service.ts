@@ -41,5 +41,4 @@ export class ClienteServiceService {
   createPessoaJuridica(cliente: Omit<PessoaJuridica, 'id'>): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/pessoaJuridica`, cliente);
   }
-
 }
