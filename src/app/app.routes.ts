@@ -4,6 +4,8 @@ import { MarcaListComponent } from './components/marca/marca-list/marca-list.com
 import { MarcaFormComponent } from './components/marca/marca-form/marca-form.component';
 import { ClienteListComponent } from './components/cliente/cliente-list/cliente-list.component';
 import { ClienteFormComponent } from './components/cliente/cliente-form/cliente-form.component';
+import { ModeloListComponent } from './components/modelo/modelo-list/modelo-list.component';
+import { ModeloFormComponent } from './components/modelo/modelo-form/modelo-form.component';
 
 export const routes: Routes = [
   { path: 'clientes', component: ClienteListComponent },
@@ -11,9 +13,10 @@ export const routes: Routes = [
   { path: 'clientes/editar/:id', component: ClienteFormComponent },
 
   { path: 'marcas', component: MarcaListComponent },
-  { path: 'marca/form', component: MarcaFormComponent},
+  { path: 'marca/form', component: MarcaFormComponent },
 
-
+  { path: 'modelos', component: ModeloListComponent },
+  { path: 'modelo/form', component: ModeloFormComponent },
 
 
 

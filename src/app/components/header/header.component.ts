@@ -39,6 +39,11 @@ export class HeaderComponent implements OnInit {
             label: 'Marcas',
             icon: 'pi pi-plus',
             routerLink: ['/marcas']
+        },
+        {
+            label: 'Modelos',
+            icon: 'pi pi-plus',
+            routerLink: ['/modelos']
         }
     ];
   }

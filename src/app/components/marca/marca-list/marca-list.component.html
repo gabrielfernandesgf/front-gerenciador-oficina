@@ -28,7 +28,7 @@
   <div *ngIf="marcaSelecionada">
     <p><strong>ID:</strong> {{ marcaSelecionada.id }}</p>
     <p><strong>Nome:</strong> {{ marcaSelecionada.nome }}</p>
-    <p><strong>CPF:</strong> {{ marcaSelecionada.descricao }}</p>
+    <p><strong>Descrição:</strong> {{ marcaSelecionada.descricao }}</p>
     <td class="p-dialog-footer">
       <p-button type="button" label="Editar" severity="warn" class="button-spacing" (click)="edit(marcaSelecionada)" (click)="displayDialogView=false"></p-button>
       <p-button type="button" label="Deletar" severity="danger" class="button-spacing" (click)="displayDialogView=false" (click)="deletar(marcaSelecionada.id)"></p-button>
