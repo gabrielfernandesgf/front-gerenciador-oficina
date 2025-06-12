@@ -3,7 +3,6 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
-import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,8 +10,7 @@ import {RouterLink} from '@angular/router';
   imports: [
     MenubarModule,
     SelectButtonModule,
-    FormsModule,
-    RouterLink
+    FormsModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
