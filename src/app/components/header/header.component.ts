@@ -29,28 +29,53 @@ export class HeaderComponent implements OnInit {
           routerLink: ['/home']
         },
         {
+          label: 'Ordem de servicço',
+          icon: 'pi pi-list-check',
+          routerLink: ['/home']
+        },
+        {
           label: 'Clientes',
           icon: 'pi pi-users',
           routerLink: ['/clientes']
         },
         {
+            label: 'Veículos',
+            icon: 'pi pi-car',
+            routerLink: ['/home']
+        },
+        {
             label: 'Marcas',
-            icon: 'pi pi-plus',
+            icon: 'pi pi-crown',
             routerLink: ['/marcas']
         },
         {
             label: 'Modelos',
-            icon: 'pi pi-plus',
+            icon: 'pi pi-objects-column',
             routerLink: ['/modelos']
         },
         {
             label: 'Acessorios',
-            icon: 'pi pi-plus',
+            icon: 'pi pi-hammer',
             routerLink: ['/acessorios']
         },
         {
+            label: 'Peças',
+            icon: 'pi pi-cog',
+            routerLink: ['/pecas']
+        },
+        {
+            label: 'Serviços',
+            icon: 'pi pi-wrench',
+            routerLink: ['/servicos']
+        },
+        {
+            label: 'Oficina',
+            icon: 'pi pi-building',
+            routerLink: ['/oficinas']
+        },
+        {
             label: 'Funcionario',
-            icon: 'pi pi-user',
+            icon: 'pi pi-id-card',
             routerLink: ['/funcionarios']
         }
     ];

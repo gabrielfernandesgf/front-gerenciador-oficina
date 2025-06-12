@@ -10,6 +10,12 @@ import { AcessorioListComponent } from './components/acessorio/acessorio-list/ac
 import { AcessorioFormComponent } from './components/acessorio/acessorio-form/acessorio-form.component';
 import { FuncionarioListComponent } from './components/funcionario/funcionario-list/funcionario-list.component';
 import { FuncionarioFormComponent } from './components/funcionario/funcionario-form/funcionario-form.component';
+import { OficinaListComponent } from './components/oficina/oficina-list/oficina-list.component';
+import { OficinaFormComponent } from './components/oficina/oficina-form/oficina-form.component';
+import { PecaListComponent } from './components/peca/peca-list/peca-list.component';
+import { PecaFormComponent } from './components/peca/peca-form/peca-form.component';
+import { ServicoListComponent } from './components/servico/servico-list/servico-list.component';
+import { ServicoFormComponent } from './components/servico/servico-form/servico-form.component';
 
 export const routes: Routes = [
   { path: 'clientes', component: ClienteListComponent },
@@ -28,6 +34,14 @@ export const routes: Routes = [
   { path: 'funcionarios', component: FuncionarioListComponent },
   { path: 'funcionario/form', component: FuncionarioFormComponent },
 
+  { path: 'oficinas', component: OficinaListComponent },
+  { path: 'oficina/form', component: OficinaFormComponent },
+
+  { path: 'pecas', component: PecaListComponent },
+  { path: 'pecas/form', component: PecaFormComponent },
+
+  { path: 'servicos', component: ServicoListComponent },
+  { path: 'servico/form', component: ServicoFormComponent },
 
   { path: "", redirectTo: "/home", pathMatch: 'full' },
   { path: 'home', component: HomeComponent }
