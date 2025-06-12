@@ -1,3 +1,4 @@
+/*
 import { Component } from '@angular/core';
 import { Pessoa } from '../../../models/Pessoa';
 import { PessoaService } from '../../../services/pessoa.service';
@@ -110,3 +111,4 @@ export class PessoaListComponent {
     }
   }
 }
+*/

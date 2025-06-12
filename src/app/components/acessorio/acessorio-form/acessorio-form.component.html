@@ -1,0 +1,13 @@
+<h2>Novo Acessório</h2>
+<form (ngSubmit)="adicionar()">
+  <div class="input-container">
+    <label for="nome"><strong>Nome: </strong></label>
+    <input id="nome" type="text" pInputText [(ngModel)]="nome" name="nome" required />
+
+    <label for="descricao"><strong>Descrição: </strong></label>
+    <input id="descricao" type="text" pInputText [(ngModel)]="descricao" name="descricao" required />
+  </div>
+  <button type="submit" pButton label="Adicionar"></button>
+</form>
+
+<p-toast></p-toast>

@@ -1,0 +1,110 @@
+<div class="header">
+  <h2>Lista de funcionários</h2>
+  <p-button routerLink="/funcionario/form" label="Adicionar funcionario" ></p-button>
+</div>
+<p-table [value]="funcionarios" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Telefone</th>
+      <th>E-mail</th>
+      <th>Data de entrada</th>
+      <th>Data de saída</th>
+      <th>Ações</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-funcionario>
+    <tr>
+      <td>{{ funcionario.nome }}</td>
+      <td>{{ funcionario.cpf }}</td>
+      <td>{{ funcionario.telefone }}</td>
+      <td>{{ funcionario.email }}</td>
+      <td>{{ funcionario.dataEntrada }}</td>
+      <td>{{ funcionario.dataSaida }}</td>
+      <td>
+        <p-button type="button" label="Visualizar" severity="info" class="button-spacing" (click)="view(funcionario)"></p-button>
+        <p-button type="button" label="Editar" severity="warn" class="button-spacing" (click)="edit(funcionario)"></p-button>
+        <p-button label="Excluir" severity="danger" *ngIf="funcionario.id !== undefined" (click)="deletar(funcionario.id)"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- Visualização por Dialog -->
+<p-dialog header="Visualizar" [(visible)]="displayDialogView" modal="true" [style]="{width: '30vw'}" [closable]="true">
+  <div *ngIf="funcionarioSelecionado">
+    <p><strong>ID:</strong> {{ funcionarioSelecionado.id }}</p>
+    <p><strong>Nome:</strong> {{ funcionarioSelecionado.nome }}</p>
+    <p><strong>CPF:</strong> {{ funcionarioSelecionado.cpf }}</p>
+    <p><strong>Telefone:</strong> {{ funcionarioSelecionado.telefone }}</p>
+    <p><strong>E-mail:</strong> {{ funcionarioSelecionado.email }}</p>
+    <p><strong>Data de entrada:</strong> {{ funcionarioSelecionado.dataEntrada }}</p>
+    <p><strong>Data de saída:</strong> {{ funcionarioSelecionado.dataSaida }}</p>
+    <td class="p-dialog-footer">
+      <p-button type="button" label="Editar" severity="warn" class="button-spacing" (click)="edit(funcionarioSelecionado)"></p-button>
+      <p-button type="button" label="Deletar" severity="danger" class="button-spacing" (click)="deletar(funcionarioSelecionado.id)"></p-button>
+    </td>
+  </div>
+</p-dialog>
+
+<!-- Edição por Dialog -->
+<p-dialog header="Editar" [(visible)]="displayDialogEdit" modal="true" [style]="{width: '30vw'}" [closable]="true">
+  <form *ngIf="funcionarioSelecionado" (ngSubmit)="update()">
+    <div class="p-fluid">
+      <div class="p-field">
+        <p><strong>ID:</strong> {{ funcionarioSelecionado.id }}</p>
+      </div>
+      <div class="p-field">
+        <label for="nome"><strong>Nome: </strong></label>
+        <input id="nome" type="text" pInputText [(ngModel)]="funcionarioSelecionado.nome" name="nome" required />
+      </div>
+      <br>
+      <div class="p-field">
+        <label for="cpf"><strong>CPF: </strong></label>
+        <input id="cpf" type="text" pInputText [(ngModel)]="funcionarioSelecionado.cpf" name="cpf" maxlength="11" pattern="[0-9]*"
+          (input)="apenasNumeros($event)" required />
+      </div>
+      <br>
+      <br>
+      <div class="p-field">
+        <label for="telefone"><strong>Telefone: </strong></label>
+        <input id="telefone" type="text" pInputText [(ngModel)]="funcionarioSelecionado.telefone" name="telefone" maxlength="13" pattern="[0-9]*"
+          (input)="apenasNumeros($event)" required />
+      </div>
+      <br>
+      <br>
+      <div class="p-field">
+        <label for="email"><strong>E-mail: </strong></label>
+        <input id="email" type="text" pInputText [(ngModel)]="funcionarioSelecionado.email" name="email" required />
+      </div>
+      <br>
+      <br>
+      <div class="p-field">
+        <label for="dataEntrada"><strong>Data de Entrada:</strong></label>
+        <p-datepicker id="dataEntrada" [(ngModel)]="funcionarioSelecionado.dataEntrada" name="dataEntrada" [minDate]="minDate"
+           [maxDate]="maxDate" [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-datepicker>
+      </div>
+      <br>
+      <div class="p-field">
+        <label for="dataSaida"><strong>Data de Saida:</strong></label>
+        <p-datepicker [(ngModel)]="funcionarioSelecionado.dataSaida" [minDate]="minDate" [maxDate]="maxDate"
+          [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy" name="dataSaida" inputId="dataSaida">
+        </p-datepicker>
+      </div>
+      <br>
+      <td class="p-dialog-footer">
+        <p-button type="submit" label="Salvar" severity="success" class="button-spacing" ></p-button>
+        <p-button type="button" label="Cancelar" severity="secondary" class="button-spacing" (click)="displayDialogEdit=false"></p-button>
+      </td>
+    </div>
+  </form>
+</p-dialog>
+
+<p-dialog header="Erro" [(visible)]="displayErrorDialog" modal="true" [closable]="true">
+  <p>{{ errorMessage }}</p>
+</p-dialog>
+
+<!-- PrimeNG Toast para exibir notificações -->
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
