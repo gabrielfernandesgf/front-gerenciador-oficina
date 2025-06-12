@@ -38,7 +38,7 @@ export const routes: Routes = [
   { path: 'oficina/form', component: OficinaFormComponent },
 
   { path: 'pecas', component: PecaListComponent },
-  { path: 'pecas/form', component: PecaFormComponent },
+  { path: 'peca/form', component: PecaFormComponent },
 
   { path: 'servicos', component: ServicoListComponent },
   { path: 'servico/form', component: ServicoFormComponent },

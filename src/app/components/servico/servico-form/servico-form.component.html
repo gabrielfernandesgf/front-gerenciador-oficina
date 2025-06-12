@@ -1,1 +1,16 @@
-<p>servico-form works!</p>
+<h2>Nova Marca</h2>
+<form (ngSubmit)="adicionar()">
+  <div class="input-container">
+    <label for="nome"><strong>Nome: </strong></label>
+    <input id="nome" type="text" pInputText [(ngModel)]="nome" name="nome" required />
+
+    <label for="descricao"><strong>Descrição: </strong></label>
+    <input id="descricao" type="text" pInputText [(ngModel)]="descricao" name="descricao" required />
+
+    <label for="valorUnitario"><strong>Valor Unitário:</strong></label>
+    <input id="valorUnitario" type="number" pInputText [(ngModel)]="valorUnitario" name="valorUnitario" step="0.01" min="0" required />
+  </div>
+  <button type="submit" pButton label="Adicionar"></button>
+</form>
+
+<p-toast></p-toast>
