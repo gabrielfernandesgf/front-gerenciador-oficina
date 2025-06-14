@@ -6,7 +6,7 @@ import {Cliente, PessoaFisica, PessoaJuridica} from '../models/cliente';
 @Injectable({
   providedIn: 'root'
 })
-export class ClienteServiceService {
+export class ClienteService {
 
   private apiUrl = 'http://localhost:8080/api';
   private http = inject(HttpClient);
@@ -40,5 +40,13 @@ export class ClienteServiceService {
   //Salvar um novo Cliente Pessoa Juridica
   createPessoaJuridica(cliente: Omit<PessoaJuridica, 'id'>): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/pessoaJuridica`, cliente);
+  }
+
+  updatePessoaFisica(cliente: PessoaFisica): Observable<PessoaFisica> {
+    return this.http.put<PessoaFisica>(`${this.apiUrl}/pessoaFisica/${cliente.id}`, cliente);
+  }
+
+  updatePessoaJuridica(cliente: PessoaJuridica): Observable<PessoaJuridica> {
+    return this.http.put<PessoaJuridica>(`${this.apiUrl}/pessoaJuridica/${cliente.id}`, cliente);
   }
 }

@@ -29,9 +29,9 @@ export class HeaderComponent implements OnInit {
           routerLink: ['/home']
         },
         {
-          label: 'Ordem de servicço',
+          label: 'Ordem de serviço',
           icon: 'pi pi-list-check',
-          routerLink: ['/home']
+          routerLink: ['/ordemDeServico']
         },
         {
           label: 'Clientes',
