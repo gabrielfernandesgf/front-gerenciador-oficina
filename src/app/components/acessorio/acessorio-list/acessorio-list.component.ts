@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { Marca } from '../../../models/marca';
-import { MarcaService } from '../../../services/marca.service';
-import { ConfirmDialog } from 'primeng/confirmdialog';
-import { RouterModule } from '@angular/router';
+import { Acessorio } from '../../../models/acessorio';
+import { AcessorioService } from '../../../services/acessorio.service';
 
 @Component({
-  selector: 'app-marca-list',
+  selector: 'app-acessorio-list',
   imports: [
     RouterModule,
     CommonModule,
@@ -24,56 +24,56 @@ import { RouterModule } from '@angular/router';
     ConfirmDialog
   ],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './marca-list.component.html',
-  styleUrl: './marca-list.component.css'
+  templateUrl: './acessorio-list.component.html',
+  styleUrl: './acessorio-list.component.css'
 })
-export class MarcaListComponent {
-  marcas: Marca[] = [];
+export class AcessorioListComponent {
+  acessorios: Acessorio[] = [];
   displayDialogView: boolean = false;
   displayDialogEdit: boolean = false;
   displayErrorDialog: boolean = false;
-  marcaSelecionada?: Marca;
+  acessorioSelecionado?: Acessorio;
   router: any;
   errorMessage: string = '';
 
-  constructor(private marcaService: MarcaService, private messageService: MessageService,
+  constructor(private acessorioService: AcessorioService, private messageService: MessageService,
               private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
-    this.marcaService.findAll().subscribe((response: Marca[]) => {
-      this.marcas = response;
+    this.acessorioService.findAll().subscribe((response: Acessorio[]) => {
+      this.acessorios = response;
     });
   }
 
-  view(marca: Marca) {
-    this.marcaSelecionada = marca;
+  view(acessorio: Acessorio) {
+    this.acessorioSelecionado = acessorio;
     this.displayDialogView = true;
   }
 
-  edit(marca: Marca) {
-    this.marcaSelecionada = { ...marca };
+  edit(acessorio: Acessorio) {
+    this.acessorioSelecionado = { ...acessorio };
     this.displayDialogEdit = true;
   }
 
   update() {
-    if (this.marcaSelecionada) {
-      if (!this.marcaSelecionada.nome || this.marcaSelecionada.nome.trim() === '') {
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'O nome não pode estar vazio.' });
+    if (this.acessorioSelecionado) {
+      if (!this.acessorioSelecionado.nome || this.acessorioSelecionado.nome.trim() === '') {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'O nome não pode estar vazio!' });
         return;
       }
-      if (!this.marcaSelecionada.descricao || this.marcaSelecionada.descricao.trim() === '') {
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'A descrição não pode estar vazia.' });
+      if (!this.acessorioSelecionado.descricao || this.acessorioSelecionado.descricao.trim() === '') {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'A descrição não pode estar vazia!' });
         return;
       }
 
-      this.marcaService.update(this.marcaSelecionada).subscribe({
+      this.acessorioService.update(this.acessorioSelecionado).subscribe({
         next: (response) => {
-          this.marcas = this.marcas.map(p => p.id === response.id ? response : p);
+          this.acessorios = this.acessorios.map(p => p.id === response.id ? response : p);
           this.displayDialogEdit = false;
           this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Atualizado com sucesso!'});
         },
         error: (err) => {
-          console.error('Erro ao atualizar marca', err);
+          console.error('Erro ao atualizar acessorio!', err);
           this.errorMessage = err.error.message || 'Erro ao atualizar!';
           this.messageService.add({severity: 'error', summary: 'Erro', detail: this.errorMessage});
         }
@@ -89,11 +89,11 @@ export class MarcaListComponent {
       acceptButtonStyleClass: 'p-button-danger',
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
-        this.marcaService.delete(id).subscribe({
+        this.acessorioService.delete(id).subscribe({
           next: () => {
             this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Excluído com sucesso!'});
-            this.marcaService.findAll().subscribe((response: Marca[]) => {
-              this.marcas = response;
+            this.acessorioService.findAll().subscribe((response: Acessorio[]) => {
+              this.acessorios = response;
             });
           },
           error: (err) => {

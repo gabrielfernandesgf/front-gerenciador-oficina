@@ -1,3 +1,4 @@
+/*
 import { ButtonModule } from 'primeng/button';
 import { Component } from '@angular/core';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -74,3 +75,4 @@ export class PessoaFormComponent {
     this.email = '';
   }
 }
+*/

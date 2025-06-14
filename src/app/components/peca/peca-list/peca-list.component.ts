@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { Marca } from '../../../models/marca';
-import { MarcaService } from '../../../services/marca.service';
-import { ConfirmDialog } from 'primeng/confirmdialog';
-import { RouterModule } from '@angular/router';
+import { Peca } from '../../../models/peca';
+import { PecaService } from '../../../services/peca.service';
 
 @Component({
-  selector: 'app-marca-list',
+  selector: 'app-peca-list',
   imports: [
     RouterModule,
     CommonModule,
@@ -24,56 +24,68 @@ import { RouterModule } from '@angular/router';
     ConfirmDialog
   ],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './marca-list.component.html',
-  styleUrl: './marca-list.component.css'
+  templateUrl: './peca-list.component.html',
+  styleUrl: './peca-list.component.css'
 })
-export class MarcaListComponent {
-  marcas: Marca[] = [];
+export class PecaListComponent {
+  pecas: Peca[] = [];
   displayDialogView: boolean = false;
   displayDialogEdit: boolean = false;
   displayErrorDialog: boolean = false;
-  marcaSelecionada?: Marca;
+  pecaSelecionada?: Peca;
   router: any;
   errorMessage: string = '';
 
-  constructor(private marcaService: MarcaService, private messageService: MessageService,
+  constructor(private pecaService: PecaService, private messageService: MessageService,
               private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
-    this.marcaService.findAll().subscribe((response: Marca[]) => {
-      this.marcas = response;
+    this.pecaService.findAll().subscribe((response: Peca[]) => {
+      this.pecas = response;
     });
   }
 
-  view(marca: Marca) {
-    this.marcaSelecionada = marca;
+  view(peca: Peca) {
+    this.pecaSelecionada = peca;
     this.displayDialogView = true;
   }
 
-  edit(marca: Marca) {
-    this.marcaSelecionada = { ...marca };
+  edit(peca: Peca) {
+    this.pecaSelecionada = { ...peca };
     this.displayDialogEdit = true;
   }
 
   update() {
-    if (this.marcaSelecionada) {
-      if (!this.marcaSelecionada.nome || this.marcaSelecionada.nome.trim() === '') {
+    if (this.pecaSelecionada) {
+      if (!this.pecaSelecionada.nome || this.pecaSelecionada.nome.trim() === '') {
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'O nome não pode estar vazio.' });
         return;
       }
-      if (!this.marcaSelecionada.descricao || this.marcaSelecionada.descricao.trim() === '') {
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'A descrição não pode estar vazia.' });
+      if (!this.pecaSelecionada.fabricante || this.pecaSelecionada.fabricante.trim() === '') {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Fabricante não pode estar vazio.' });
+        return;
+      }
+      if (!this.pecaSelecionada.volumeTamanho || this.pecaSelecionada.volumeTamanho.trim() === '') {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Informe o volume/tamanho da peça.' });
+        return;
+      }
+      if (this.pecaSelecionada.quantidadeEstoque < 0) {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Quantidade em estoque inválido.' });
+        return;
+      }
+      if (this.pecaSelecionada.valorUnitario < 0) {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Informe um valor unitário válido.' });
         return;
       }
 
-      this.marcaService.update(this.marcaSelecionada).subscribe({
+      this.pecaService.update(this.pecaSelecionada).subscribe({
         next: (response) => {
-          this.marcas = this.marcas.map(p => p.id === response.id ? response : p);
+          this.pecas = this.pecas.map(p => p.id === response.id ? response : p);
           this.displayDialogEdit = false;
           this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Atualizado com sucesso!'});
         },
         error: (err) => {
-          console.error('Erro ao atualizar marca', err);
+          console.error('Erro ao atualizar peca', err);
           this.errorMessage = err.error.message || 'Erro ao atualizar!';
           this.messageService.add({severity: 'error', summary: 'Erro', detail: this.errorMessage});
         }
@@ -89,11 +101,11 @@ export class MarcaListComponent {
       acceptButtonStyleClass: 'p-button-danger',
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
-        this.marcaService.delete(id).subscribe({
+        this.pecaService.delete(id).subscribe({
           next: () => {
             this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Excluído com sucesso!'});
-            this.marcaService.findAll().subscribe((response: Marca[]) => {
-              this.marcas = response;
+            this.pecaService.findAll().subscribe((response: Peca[]) => {
+              this.pecas = response;
             });
           },
           error: (err) => {

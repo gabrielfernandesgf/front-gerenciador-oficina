@@ -1,0 +1,22 @@
+<h2>Nova Marca</h2>
+<form (ngSubmit)="adicionar()">
+  <div class="input-container">
+    <label for="nome"><strong>Nome: </strong></label>
+    <input id="nome" type="text" pInputText [(ngModel)]="nome" name="nome" required />
+
+    <label for="fabricante"><strong>Fabricante: </strong></label>
+    <input id="fabricante" type="text" pInputText [(ngModel)]="fabricante" name="fabricante" required />
+
+    <label for="volumeTamanho"><strong>Volume/Tamanho: </strong></label>
+    <input id="volumeTamanho" type="text" pInputText [(ngModel)]="volumeTamanho" name="volumeTamanho" required />
+
+    <label for="quantidadeEstoque"><strong>Quantidade em estoque:</strong></label>
+    <input id="quantidadeEstoque" type="number" pInputText [(ngModel)]="quantidadeEstoque" name="quantidadeEstoque" step="0" min="0" required />
+
+    <label for="valorUnitario"><strong>Valor unitário:</strong></label>
+    <input id="valorUnitario" type="number" pInputText [(ngModel)]="valorUnitario" name="valorUnitario" step="0.01" min="0" required />
+  </div>
+  <button type="submit" pButton label="Adicionar"></button>
+</form>
+
+<p-toast></p-toast>

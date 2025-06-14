@@ -1,0 +1,72 @@
+<div class="header">
+  <h2>Lista de Modelos</h2>
+  <p-button routerLink="/modelo/form" label="Adicionar Modelo" ></p-button>
+</div>
+<p-table [value]="modelos" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nome</th>
+      <th>Descrição</th>
+      <th>Marca</th>
+      <th>Ações</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-modelo>
+    <tr>
+      <td>{{ modelo.nome }}</td>
+      <td>{{ modelo.descricao }}</td>
+      <td>{{ modelo.marca?.nome }}</td>
+      <td>
+        <p-button type="button" label="Visualizar" severity="info" class="button-spacing" (click)="view(modelo)"></p-button>
+        <p-button type="button" label="Editar" severity="warn" class="button-spacing" (click)="edit(modelo)"></p-button>
+        <p-button label="Excluir" severity="danger" *ngIf="modelo.id !== undefined" (click)="deletar(modelo.id)"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- Visualização por Dialog -->
+<p-dialog header="Visualizar" [(visible)]="displayDialogView" modal="true" [style]="{width: '30vw'}" [closable]="true">
+  <div *ngIf="modeloSelecionado">
+    <p><strong>ID:</strong> {{ modeloSelecionado.id }}</p>
+    <p><strong>Nome:</strong> {{ modeloSelecionado.nome }}</p>
+    <p><strong>Descrição:</strong> {{ modeloSelecionado.descricao }}</p>
+    <td class="p-dialog-footer">
+      <p-button type="button" label="Editar" severity="warn" class="button-spacing" (click)="edit(modeloSelecionado)"></p-button>
+      <p-button type="button" label="Deletar" severity="danger" class="button-spacing" (click)="deletar(modeloSelecionado.id)"></p-button>
+    </td>
+  </div>
+</p-dialog>
+
+<!-- Edição por Dialog -->
+<p-dialog header="Editar" [(visible)]="displayDialogEdit" modal="true" [style]="{width: '30vw'}" [closable]="true">
+  <form *ngIf="modeloSelecionado" (ngSubmit)="update()">
+    <div class="p-fluid">
+      <div class="p-field">
+        <p><strong>ID:</strong> {{ modeloSelecionado.id }}</p>
+      </div>
+      <div class="p-field">
+        <label for="nome"><strong>Nome: </strong></label>
+        <input id="nome" type="text" pInputText [(ngModel)]="modeloSelecionado.nome" name="nome" required />
+      </div>
+      <br>
+      <div class="p-field">
+        <label for="descricao"><strong>Descrição: </strong></label>
+        <input id="descricao" type="text" pInputText [(ngModel)]="modeloSelecionado.descricao" name="descricao" required />
+      </div>
+      <br>
+      <td class="p-dialog-footer">
+        <p-button type="submit" label="Salvar" severity="success" class="button-spacing" ></p-button>
+        <p-button type="button" label="Cancelar" severity="secondary" class="button-spacing" (click)="displayDialogEdit=false"></p-button>
+      </td>
+    </div>
+  </form>
+</p-dialog>
+
+<p-dialog header="Erro" [(visible)]="displayErrorDialog" modal="true" [closable]="true">
+  <p>{{ errorMessage }}</p>
+</p-dialog>
+
+<!-- PrimeNG Toast para exibir notificações -->
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

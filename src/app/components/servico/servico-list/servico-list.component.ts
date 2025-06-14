@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { Marca } from '../../../models/marca';
-import { MarcaService } from '../../../services/marca.service';
-import { ConfirmDialog } from 'primeng/confirmdialog';
-import { RouterModule } from '@angular/router';
+import { Servico } from '../../../models/servico';
+import { ServicoService } from '../../../services/servico.service';
 
 @Component({
-  selector: 'app-marca-list',
+  selector: 'app-servico-list',
   imports: [
     RouterModule,
     CommonModule,
@@ -24,56 +24,60 @@ import { RouterModule } from '@angular/router';
     ConfirmDialog
   ],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './marca-list.component.html',
-  styleUrl: './marca-list.component.css'
+  templateUrl: './servico-list.component.html',
+  styleUrl: './servico-list.component.css'
 })
-export class MarcaListComponent {
-  marcas: Marca[] = [];
+export class ServicoListComponent {
+  servicos: Servico[] = [];
   displayDialogView: boolean = false;
   displayDialogEdit: boolean = false;
   displayErrorDialog: boolean = false;
-  marcaSelecionada?: Marca;
+  servicoSelecionado?: Servico;
   router: any;
   errorMessage: string = '';
 
-  constructor(private marcaService: MarcaService, private messageService: MessageService,
+  constructor(private servicoService: ServicoService, private messageService: MessageService,
               private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
-    this.marcaService.findAll().subscribe((response: Marca[]) => {
-      this.marcas = response;
+    this.servicoService.findAll().subscribe((response: Servico[]) => {
+      this.servicos = response;
     });
   }
 
-  view(marca: Marca) {
-    this.marcaSelecionada = marca;
+  view(servico: Servico) {
+    this.servicoSelecionado = servico;
     this.displayDialogView = true;
   }
 
-  edit(marca: Marca) {
-    this.marcaSelecionada = { ...marca };
+  edit(servico: Servico) {
+    this.servicoSelecionado = { ...servico };
     this.displayDialogEdit = true;
   }
 
   update() {
-    if (this.marcaSelecionada) {
-      if (!this.marcaSelecionada.nome || this.marcaSelecionada.nome.trim() === '') {
+    if (this.servicoSelecionado) {
+      if (!this.servicoSelecionado.nome || this.servicoSelecionado.nome.trim() === '') {
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'O nome não pode estar vazio.' });
         return;
       }
-      if (!this.marcaSelecionada.descricao || this.marcaSelecionada.descricao.trim() === '') {
+      if (!this.servicoSelecionado.descricao || this.servicoSelecionado.descricao.trim() === '') {
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'A descrição não pode estar vazia.' });
         return;
       }
+      if (this.servicoSelecionado.valorUnitario < 0) {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Informe um valor unitário válido.' });
+        return;
+      }
 
-      this.marcaService.update(this.marcaSelecionada).subscribe({
+      this.servicoService.update(this.servicoSelecionado).subscribe({
         next: (response) => {
-          this.marcas = this.marcas.map(p => p.id === response.id ? response : p);
+          this.servicos = this.servicos.map(p => p.id === response.id ? response : p);
           this.displayDialogEdit = false;
           this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Atualizado com sucesso!'});
         },
         error: (err) => {
-          console.error('Erro ao atualizar marca', err);
+          console.error('Erro ao atualizar servico', err);
           this.errorMessage = err.error.message || 'Erro ao atualizar!';
           this.messageService.add({severity: 'error', summary: 'Erro', detail: this.errorMessage});
         }
@@ -89,11 +93,11 @@ export class MarcaListComponent {
       acceptButtonStyleClass: 'p-button-danger',
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
-        this.marcaService.delete(id).subscribe({
+        this.servicoService.delete(id).subscribe({
           next: () => {
             this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Excluído com sucesso!'});
-            this.marcaService.findAll().subscribe((response: Marca[]) => {
-              this.marcas = response;
+            this.servicoService.findAll().subscribe((response: Servico[]) => {
+              this.servicos = response;
             });
           },
           error: (err) => {

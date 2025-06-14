@@ -1,0 +1,19 @@
+<h2>Novo Modelo</h2>
+<form (ngSubmit)="adicionar()">
+  <div class="input-container">
+    <label for="nome"><strong>Nome: </strong></label>
+    <input id="nome" type="text" pInputText [(ngModel)]="nome" name="nome" required />
+
+    <label for="descricao"><strong>Descrição: </strong></label>
+    <input id="descricao" type="text" pInputText [(ngModel)]="descricao" name="descricao" required />
+  </div>
+
+  <div class="input-container">
+    <label for="marca"><strong>Marca: </strong></label>
+    <p-listbox [options]="marcas" optionLabel="nome" [(ngModel)]="marcaSelecionada" name="marcaSelecionada" [filter]="true" [style]="{'width': '300px'}" ></p-listbox>
+  </div>
+
+  <button type="submit" pButton label="Adicionar"></button>
+</form>
+
+<p-toast></p-toast>

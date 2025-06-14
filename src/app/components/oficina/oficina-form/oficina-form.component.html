@@ -1,0 +1,16 @@
+<h2>Nova Oficina</h2>
+<form (ngSubmit)="adicionar()">
+  <div class="input-container">
+    <label for="nome"><strong>Nome: </strong></label>
+    <input id="nome" type="text" pInputText [(ngModel)]="nome" name="nome" required />
+
+    <label for="email"><strong>E-mail: </strong></label>
+    <input id="email" type="text" pInputText [(ngModel)]="email" name="email" required />
+
+    <label for="endereco"><strong>Endereço: </strong></label>
+    <input id="endereco" type="text" pInputText [(ngModel)]="endereco" name="endereco" required />
+  </div>
+  <button type="submit" pButton label="Adicionar"></button>
+</form>
+
+<p-toast></p-toast>

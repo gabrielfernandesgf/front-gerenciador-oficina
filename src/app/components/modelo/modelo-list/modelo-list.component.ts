@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { Marca } from '../../../models/marca';
-import { MarcaService } from '../../../services/marca.service';
-import { ConfirmDialog } from 'primeng/confirmdialog';
-import { RouterModule } from '@angular/router';
+import { Modelo } from '../../../models/modelo';
+import { ModeloService } from '../../../services/modelo.service';
 
 @Component({
-  selector: 'app-marca-list',
+  selector: 'app-modelo-list',
   imports: [
     RouterModule,
     CommonModule,
@@ -24,56 +24,56 @@ import { RouterModule } from '@angular/router';
     ConfirmDialog
   ],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './marca-list.component.html',
-  styleUrl: './marca-list.component.css'
+  templateUrl: './modelo-list.component.html',
+  styleUrl: './modelo-list.component.css'
 })
-export class MarcaListComponent {
-  marcas: Marca[] = [];
+export class ModeloListComponent {
+  modelos: Modelo[] = [];
   displayDialogView: boolean = false;
   displayDialogEdit: boolean = false;
   displayErrorDialog: boolean = false;
-  marcaSelecionada?: Marca;
+  modeloSelecionado?: Modelo;
   router: any;
   errorMessage: string = '';
 
-  constructor(private marcaService: MarcaService, private messageService: MessageService,
+  constructor(private modeloService: ModeloService, private messageService: MessageService,
               private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
-    this.marcaService.findAll().subscribe((response: Marca[]) => {
-      this.marcas = response;
+    this.modeloService.findAll().subscribe((response: Modelo[]) => {
+      this.modelos = response;
     });
   }
 
-  view(marca: Marca) {
-    this.marcaSelecionada = marca;
+  view(modelo: Modelo) {
+    this.modeloSelecionado = modelo;
     this.displayDialogView = true;
   }
 
-  edit(marca: Marca) {
-    this.marcaSelecionada = { ...marca };
+  edit(modelo: Modelo) {
+    this.modeloSelecionado = { ...modelo };
     this.displayDialogEdit = true;
   }
 
   update() {
-    if (this.marcaSelecionada) {
-      if (!this.marcaSelecionada.nome || this.marcaSelecionada.nome.trim() === '') {
+    if (this.modeloSelecionado) {
+      if (!this.modeloSelecionado.nome || this.modeloSelecionado.nome.trim() === '') {
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'O nome não pode estar vazio.' });
         return;
       }
-      if (!this.marcaSelecionada.descricao || this.marcaSelecionada.descricao.trim() === '') {
+      if (!this.modeloSelecionado.descricao || this.modeloSelecionado.descricao.trim() === '') {
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'A descrição não pode estar vazia.' });
         return;
       }
 
-      this.marcaService.update(this.marcaSelecionada).subscribe({
+      this.modeloService.update(this.modeloSelecionado).subscribe({
         next: (response) => {
-          this.marcas = this.marcas.map(p => p.id === response.id ? response : p);
+          this.modelos = this.modelos.map(p => p.id === response.id ? response : p);
           this.displayDialogEdit = false;
           this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Atualizado com sucesso!'});
         },
         error: (err) => {
-          console.error('Erro ao atualizar marca', err);
+          console.error('Erro ao atualizar modelo', err);
           this.errorMessage = err.error.message || 'Erro ao atualizar!';
           this.messageService.add({severity: 'error', summary: 'Erro', detail: this.errorMessage});
         }
@@ -89,11 +89,11 @@ export class MarcaListComponent {
       acceptButtonStyleClass: 'p-button-danger',
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
-        this.marcaService.delete(id).subscribe({
+        this.modeloService.delete(id).subscribe({
           next: () => {
             this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Excluído com sucesso!'});
-            this.marcaService.findAll().subscribe((response: Marca[]) => {
-              this.marcas = response;
+            this.modeloService.findAll().subscribe((response: Modelo[]) => {
+              this.modelos = response;
             });
           },
           error: (err) => {

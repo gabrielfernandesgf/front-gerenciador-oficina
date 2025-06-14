@@ -1,109 +1,71 @@
-<p-card [header]="isEditMode ? 'Editar Cliente' : 'Adicionar Novo Cliente' ">
-  <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
+<p-card header="Novo Cliente">
+  <form #clienteForm="ngForm" (ngSubmit)="adicionar()">
 
-    <div class="field col-12" *ngIf="!isEditMode">
-      <label class="mb-3">Tipo de Cliente</label>
-      <p-selectButton
-        [options]="tiposDeCliente"
-        formControlName="tipoCliente"
-        optionLabel="label"
-        optionValue="value" />
+    <!-- Seletor de Tipo -->
+    <div class="field mb-4">
+      <p-selectButton [options]="tiposDeClienteOpcoes" [(ngModel)]="tipoCliente" name="tipoCliente" optionLabel="label" optionValue="value"></p-selectButton>
     </div>
 
-    <div class="p-fluid p-formgrid grid mt-4">
-      <div class="field col-12">
-        <p-floatlabel>
-          <input pInputText id="nome" formControlName="nome">
-          <label for="nome">Nome</label>
-        </p-floatlabel>
-      </div>
+      <div class="input-container">
+        <label for="nome">Nome: </label>
+        <input id="nome" type="text" pInputText [(ngModel)]="cliente.nome" name="nome" required/>
 
-      <div class="field col-12 md:col-6">
-        <p-floatlabel>
-          <input pInputText id="email" formControlName="email">
-          <label for="email">Email</label>
-        </p-floatlabel>
-      </div>
+        <ng-container *ngIf="tipoCliente === 'PF'">
+          <label for="cpf">CPF: </label>
+          <input id="cpf" type="text" pInputText [(ngModel)]="cliente.cpf" name="cpf"  required />
 
-      <div class="field col-12 md:col-6">
-        <p-floatlabel>
-          <input pInputText id="telefone" formControlName="telefone">
-          <label for="telefone">Telefone</label>
-        </p-floatlabel>
-      </div>
+          <label for="dataDeNascimento">Data de Nascimento: </label>
+          <input id="dataDeNascimento" type="text" pInputText [(ngModel)]="cliente.dataDeNascimento" name="dataDeNascimento" />
+        </ng-container>
 
-      <div class="field col-12">
-        <p-floatlabel>
-          <input pInputText id="endereco" formControlName="endereco">
-          <label for="endereco">Endereço</label>
-        </p-floatlabel>
-      </div>
+        <ng-container *ngIf="tipoCliente === 'PJ'">
+          <label for="cnpj">CNPJ:  </label>
+          <input id="cnpj" type="text" pInputText [(ngModel)]="cliente.cnpj" name="cnpj" required />
 
-      <div class="field col-12 md:col-6">
-        <p-floatlabel>
-          <input pInputText id="cep" formControlName="cep">
-          <label for="cep">CEP</label>
-        </p-floatlabel>
-      </div>
+          <label for="razaoSocial">Razão Social: </label>
+          <input id="razaoSocial" type="text" pInputText [(ngModel)]="cliente.razaoSocial" name="razaoSocial" required/>
 
-<!--      Campos para Pessoa Fisica-->
-      <div class="p-fluid p-formgrid grid" *ngIf="clienteForm.get('tipoCliente')?.value === 'PF'">
-        <div class="field col-12 md:col-6">
-          <p-floatlabel>
-            <input pInputText id="cpf" formControlName="cpf" />
-            <label for="cpf">CPF</label>
-          </p-floatlabel>
-        </div>
-        <div class="field col-12 md:col-6">
-          <p-floatlabel>
-            <input type="date" pInputText id="dataDeNascimento" formControlName="dataDeNascimento" />
-            <label for="dataDeNascimento">Data de Nascimento</label>
-          </p-floatlabel>
-        </div>
-      </div>
+        </ng-container>
 
-<!--      Campos Para Pessoa Juridica -->
-      <div class="p-fluid p-formgrid grid" *ngIf="clienteForm.get('tipoCliente')?.value === 'PJ'">
-        <div class="field col-12 md:col-6">
-          <p-floatlabel>
-            <input pInputText id="cnpj" formControlName="cnpj" />
-            <label for="cnpj">CNPJ</label>
-          </p-floatlabel>
-        </div>
-        <div class="field col-12 md:col-6">
-          <p-floatlabel>
-            <input pInputText id="razaoSocial" formControlName="razaoSocial" />
-            <label for="razaoSocial">Razão Social</label>
-          </p-floatlabel>
-        </div>
+        <label for="email">Email: </label>
+        <input id="email" type="text" pInputText [(ngModel)]="cliente.email" name="email" required />
 
-        <div class="field col-12">
-          <p-floatlabel>
-            <input pInputText id="inscricaoSocial" formControlName="inscricaoSocial" />
-            <label for="inscricaoSocial">Inscricao Estadual</label>
-          </p-floatlabel>
-        </div>
-        <div class="field col-12 md:col-6">
-          <p-floatlabel>
-            <input pInputText id="nomeResposavel" formControlName="nomeResposavel" />
-            <label for="nomeResposavel">Nome do Responsavel</label>
-          </p-floatlabel>
-        </div>
-        <div class="field col-12 md:col-6">
-          <p-floatlabel>
-            <input pInputText id="contatoResponsavel" formControlName="contatoResponsavel" />
-            <label for="contatoResponsavel">Contato do Responsavel</label>
-          </p-floatlabel>
-        </div>
-      </div>
+      </div> <br>
+
+    <div class="input-container">
+
+      <label for="telefone">Telefone: </label>
+      <input id="telefone" type="text" pInputText [(ngModel)]="cliente.telefone" name="telefone" required />
+
+      <label for="cep">CEP: </label>
+      <input id="cep" type="text" pInputText [(ngModel)]="cliente.cep" name="cep" required />
+
+      <label for="endereco">Endereço: </label>
+      <input id="endereco" type="text" pInputText [(ngModel)]="cliente.endereco" name="endereco" required />
+
+
+    </div>
+    <br>
+
+    <div class="input-container">
+      <ng-container *ngIf="tipoCliente === 'PJ'">
+        <label for="inscricaoSocial">Inscrição Estadual: </label>
+        <input id="inscricaoSocial" type="text" pInputText [(ngModel)]="cliente.inscricaoSocial" name="inscricaoSocial" required/>
+
+        <label for="nomeResposavel">Nome do Responsavel: </label>
+        <input id="nomeResposavel" type="text" pInputText [(ngModel)]="cliente.nomeResposavel" name="nomeResposavel" required/>
+
+        <label for="contatoResponsavel">Contato do Responsavel: </label>
+        <input id="contatoResponsavel" type="text" pInputText [(ngModel)]="cliente.contatoResponsavel" name="contatoResponsavel" required />
+
+      </ng-container>
     </div>
 
-    <div class="flex gap-3 mt-4 justify-content-end">
-      <p-button type="button" label="Cancelar" (click)="onCancel()" severity="secondary" />
-      <p-button type="submit" label="Salvar" [disabled]="clienteForm.invalid"/>
-    </div>
 
+    <div class="flex justify-content-end mt-4">
+      <p-button type="submit" label="Adicionar" icon="pi pi-check" [disabled]="!clienteForm.form.valid" ></p-button>
+    </div>
   </form>
-
-
 </p-card>
+
+<p-toast></p-toast>
