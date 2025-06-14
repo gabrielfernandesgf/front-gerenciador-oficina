@@ -1,26 +1,27 @@
-<h2>Nova funcionário</h2>
-<form (ngSubmit)="adicionar()">
-  <div class="input-container">
-    <label for="nome"><strong>Nome: </strong></label>
-    <input id="nome" type="text" pInputText [(ngModel)]="nome" name="nome" required />
+<p-card header="Novo Funcionario">
+  <form (ngSubmit)="adicionar()">
+    <div class="input-container">
+      <label for="nome"><strong>Nome: </strong></label>
+      <input id="nome" type="text" pInputText [(ngModel)]="nome" name="nome" required />
 
-    <label for="cpf"><strong>CPF: </strong></label>
-    <input id="cpf" type="text" pInputText [(ngModel)]="cpf" name="cpf" maxlength="11" pattern="[0-9]*"
-      (input)="apenasNumeros($event)" required />
+      <label for="cpf"><strong>CPF: </strong></label>
+      <input id="cpf" type="text" pInputText [(ngModel)]="cpf" name="cpf" maxlength="11" pattern="[0-9]*"
+             (input)="apenasNumeros($event)" required />
 
-    <label for="telefone"><strong>Telefone: </strong></label>
-    <input id="telefone" type="text" pInputText [(ngModel)]="telefone" name="telefone" maxlength="13" pattern="[0-9]*"
-      (input)="apenasNumeros($event)" required />
+      <label for="telefone"><strong>Telefone: </strong></label>
+      <input id="telefone" type="text" pInputText [(ngModel)]="telefone" name="telefone" maxlength="13" pattern="[0-9]*"
+             (input)="apenasNumeros($event)" required />
 
-    <label for="email"><strong>E-mail: </strong></label>
-    <input id="email" type="text" pInputText [(ngModel)]="email" name="email" required />
+      <label for="email"><strong>E-mail: </strong></label>
+      <input id="email" type="text" pInputText [(ngModel)]="email" name="email" required />
 
-    <label for="dataEntrada"><strong>Data de Entrada:</strong></label>
-    <p-datepicker id="dataEntrada" [(ngModel)]="dataEntrada" name="dataEntrada" [minDate]="minDate" [maxDate]="maxDate"
-      [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-datepicker>
+      <label for="dataEntrada"><strong>Data de Entrada:</strong></label>
+      <p-datepicker id="dataEntrada" [(ngModel)]="dataEntrada" name="dataEntrada" [minDate]="minDate" [maxDate]="maxDate"
+                    [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-datepicker>
 
-  </div>
-  <button type="submit" pButton label="Adicionar"></button>
-</form>
+    </div>
+    <button type="submit" pButton label="Adicionar"></button>
+  </form>
+</p-card>
 
 <p-toast></p-toast>

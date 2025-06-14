@@ -2,6 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Cliente, PessoaFisica, PessoaJuridica} from '../models/cliente';
+import {Modelo} from "../models/modelo";
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,12 @@ export class ClienteService {
 
   constructor() { }
 
+  findAll(): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(`${this.apiUrl}/cliente`);
+  }
+
   public getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${this.apiUrl}/cliente`)
+    return this.findAll();
   }
 
   //Busca um unico cliente pelo ID
