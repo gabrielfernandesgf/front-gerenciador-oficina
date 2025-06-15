@@ -18,6 +18,8 @@ import { ServicoListComponent } from './components/servico/servico-list/servico-
 import { ServicoFormComponent } from './components/servico/servico-form/servico-form.component';
 import { OsListComponent } from './components/os/os-list/os-list.component';
 import { OsFormComponent } from './components/os/os-form/os-form.component';
+import { VeiculoListComponent } from './components/veiculos/veiculo-list/veiculo-list.component';
+import { VeiculoFormComponent } from './components/veiculos/veiculo-form/veiculo-form.component';
 
 export const routes: Routes = [
   { path: 'clientes', component: ClienteListComponent },
@@ -44,6 +46,9 @@ export const routes: Routes = [
 
   { path: 'servicos', component: ServicoListComponent },
   { path: 'servico/form', component: ServicoFormComponent },
+
+  { path: 'veiculos', component: VeiculoListComponent },
+  { path: 'veiculo/form', component: VeiculoFormComponent },
 
   { path: 'ordensDeServico', component: OsListComponent },
   { path: 'ordemDeServico/form', component: OsFormComponent },
