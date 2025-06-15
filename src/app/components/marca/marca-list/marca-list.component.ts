@@ -10,6 +10,7 @@ import { Marca } from '../../../models/marca';
 import { MarcaService } from '../../../services/marca.service';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { RouterModule } from '@angular/router';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-marca-list',
@@ -21,7 +22,8 @@ import { RouterModule } from '@angular/router';
     DialogModule,
     FormsModule,
     ToastModule,
-    ConfirmDialog
+    ConfirmDialog,
+    InputText
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './marca-list.component.html',

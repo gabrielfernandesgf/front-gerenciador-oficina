@@ -6,10 +6,18 @@ import {Button} from 'primeng/button';
 import {ConfirmDialog} from 'primeng/confirmdialog';
 import {Dialog} from 'primeng/dialog';
 import {FormsModule} from '@angular/forms';
-import {NgIf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {TableModule} from 'primeng/table';
 import {Toast} from 'primeng/toast';
+import {InputText} from 'primeng/inputtext';
+import {Modelo} from '../../../models/modelo';
+import {ModeloService} from '../../../services/modelo.service';
+import {Chip} from 'primeng/chip';
+import {AutoComplete} from 'primeng/autocomplete';
+import {Textarea} from 'primeng/textarea';
+import {Cliente} from '../../../models/cliente';
+import {ClienteService} from '../../../services/cliente.service';
 
 @Component({
   selector: 'app-veiculo-list',
@@ -22,7 +30,12 @@ import {Toast} from 'primeng/toast';
     PrimeTemplate,
     RouterLink,
     TableModule,
-    Toast
+    Toast,
+    InputText,
+    Chip,
+    NgForOf,
+    AutoComplete,
+    Textarea
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './veiculo-list.component.html',
@@ -37,17 +50,33 @@ export class VeiculoListComponent implements OnInit {
   router: any;
   errorMessage: string = '';
 
-  constructor(private veiculoService: VeiculoService, private messageService: MessageService,
-              private confirmationService: ConfirmationService) {}
+  todosModelos: Modelo[] = [];
+  sugestaoModelos: Modelo[] = [];
+  modeloSelecionadoEdit?: Modelo;
+
+  todosClientes: Cliente[] = [];
+  sugestaoClientes: Cliente[] = [];
+  clienteSelecionadoEdit?: Cliente;
+
+  novoAcessorioNomeEdit: string = '';
+  novoAcessorioDescEdit: string = '';
+
+  constructor (
+    private veiculoService: VeiculoService,
+    private modeloService: ModeloService,
+    private clienteService: ClienteService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) {}
 
   ngOnInit() {
     this.carregarVeiculos();
+    this.modeloService.findAll().subscribe(data => this.todosModelos = data);
+    this.clienteService.findAll().subscribe(data => this.todosClientes = data);
   }
 
   carregarVeiculos(): void {
-    this.veiculoService.findAll().subscribe((response: Veiculo[]) => {
-      this.veiculos = response;
-    });
+    this.veiculoService.findAll().subscribe(data => this.veiculos = data);
   }
 
   view(veiculo: Veiculo) {
@@ -56,13 +85,59 @@ export class VeiculoListComponent implements OnInit {
   }
 
   edit(veiculo: Veiculo) {
-    this.veiculoSelecionado = { ...veiculo };
-    this.displayDialogEdit = true;
+    this.veiculoSelecionado = JSON.parse(JSON.stringify(veiculo));
+    if (this.veiculoSelecionado) {
+      if (!this.veiculoSelecionado.veiculoAcessorios) {
+        this.veiculoSelecionado.veiculoAcessorios = [];
+      }
+      this.modeloSelecionadoEdit = this.veiculoSelecionado.modelo;
+      this.clienteSelecionadoEdit = this.todosClientes.find(c => c.nome === this.veiculoSelecionado?.identificadorPatrimonio);
+      this.displayDialogEdit = true;
+    }
+  }
+
+  searchModeloEdit(event: { query: string}) {
+    const query = event.query.toLowerCase();
+    this.sugestaoModelos = this.todosModelos.filter(m => m.nome.toLowerCase().includes(query));
+  }
+
+  searchClienteEdit(event: {query: string}) {
+    const query = event.query.toLowerCase();
+    this.sugestaoClientes = this.todosClientes.filter(c => c.nome.toLowerCase().includes(query));
+  }
+
+  adicionarAcessorioEdit() {
+    if (!this.novoAcessorioNomeEdit.trim() || !this.veiculoSelecionado) return;
+    const novoAcessorio = {
+      id: 0,
+      acessorio: { id: 0, nome: this.novoAcessorioNomeEdit, descricao: this.novoAcessorioDescEdit}
+    };
+    this.veiculoSelecionado.veiculoAcessorios.push(novoAcessorio as any);
+    this.novoAcessorioNomeEdit = '';
+    this.novoAcessorioDescEdit = '';
+  }
+
+  removerAcessorioEdit(index: number) {
+    if (this.veiculoSelecionado) {
+      this.veiculoSelecionado.veiculoAcessorios.splice(index, 1);
+    }
   }
 
   update() {
-    if (this.veiculoSelecionado) {
-      this.veiculoService.update(this.veiculoSelecionado).subscribe({
+    if (!this.veiculoSelecionado || !this.modeloSelecionadoEdit) return;
+
+    const updateDTO = {
+      chassi: this.veiculoSelecionado.chassi,
+      renavan: this.veiculoSelecionado.renavan,
+      anoFabricacao: this.veiculoSelecionado.anoFabricacao,
+      anoModelo: this.veiculoSelecionado.anoModelo,
+      quilometragem: this.veiculoSelecionado.quilometragem,
+      identificadorPatrimonio: this.veiculoSelecionado.identificadorPatrimonio,
+      modeloId: this.modeloSelecionadoEdit.id,
+      acessorios: this.veiculoSelecionado.veiculoAcessorios.map(va => va.acessorio)
+    };
+
+      this.veiculoService.update(this.veiculoSelecionado.placa, updateDTO).subscribe({
         next: () => {
           this.carregarVeiculos();
           this.displayDialogEdit = false;
@@ -75,7 +150,6 @@ export class VeiculoListComponent implements OnInit {
         }
       });
     }
-  }
 
   deletar(placa: string): void {
     this.confirmationService.confirm({
@@ -96,7 +170,6 @@ export class VeiculoListComponent implements OnInit {
             this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.errorMessage });
           }
         });
-        this.displayDialogView = false;
       }
     });
   }

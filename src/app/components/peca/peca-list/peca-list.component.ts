@@ -10,6 +10,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { Peca } from '../../../models/peca';
 import { PecaService } from '../../../services/peca.service';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-peca-list',
@@ -21,7 +22,8 @@ import { PecaService } from '../../../services/peca.service';
     DialogModule,
     FormsModule,
     ToastModule,
-    ConfirmDialog
+    ConfirmDialog,
+    InputText
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './peca-list.component.html',
