@@ -48,6 +48,9 @@ export const routes: Routes = [
   { path: 'veiculos', component: VeiculoListComponent },
   { path: 'veiculo/form', component: VeiculoFormComponent },
 
+  { path: 'oficinas', component: OficinaListComponent },
+  { path: 'oficinas/form', component: OficinaFormComponent },
+
   { path: "", redirectTo: "/home", pathMatch: 'full' },
   { path: 'home', component: HomeComponent }
 ];

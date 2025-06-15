@@ -60,7 +60,6 @@
   </div>
 
 </p-dialog>
-
 <!-- DIÁLOGO DE EDIÇÃO -->
 <p-dialog header="Editar" [(visible)]="displayDialogEdit" modal="true" [style]="{width: '30vw'}" [closable]="true">
   <form *ngIf="clienteSelecionado" (ngSubmit)="update()">

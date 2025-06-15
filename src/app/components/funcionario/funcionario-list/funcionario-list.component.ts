@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { Funcionario } from '../../../models/funcionario';
 import { FuncionarioService } from '../../../services/funcionario.service';
 import { DatePickerModule } from 'primeng/datepicker';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-funcionario-list',
@@ -23,7 +24,8 @@ import { DatePickerModule } from 'primeng/datepicker';
     FormsModule,
     ToastModule,
     ConfirmDialog,
-    DatePickerModule
+    DatePickerModule,
+    InputText
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './funcionario-list.component.html',

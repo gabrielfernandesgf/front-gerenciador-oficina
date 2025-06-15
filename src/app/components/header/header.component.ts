@@ -53,11 +53,11 @@ export class HeaderComponent implements OnInit {
             icon: 'pi pi-objects-column',
             routerLink: ['/modelos']
         },
-        {
-            label: 'Acessorios',
-            icon: 'pi pi-hammer',
-            routerLink: ['/acessorios']
-        },
+        // {
+        //     label: 'Acessorios',
+        //     icon: 'pi pi-hammer',
+        //     routerLink: ['/acessorios']
+        // },
         {
             label: 'Peças',
             icon: 'pi pi-cog',

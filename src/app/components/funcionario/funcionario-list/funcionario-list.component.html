@@ -82,13 +82,12 @@
       <br>
       <div class="p-field">
         <label for="dataEntrada"><strong>Data de Entrada:</strong></label>
-        <p-datepicker id="dataEntrada" [(ngModel)]="funcionarioSelecionado.dataEntrada" name="dataEntrada" [minDate]="minDate"
-           [maxDate]="maxDate" [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-datepicker>
+        <p-datepicker id="dataEntrada" [(ngModel)]="funcionarioSelecionado.dataEntrada" name="dataEntrada" [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-datepicker>
       </div>
       <br>
       <div class="p-field">
         <label for="dataSaida"><strong>Data de Saida:</strong></label>
-        <p-datepicker [(ngModel)]="funcionarioSelecionado.dataSaida" [minDate]="minDate" [maxDate]="maxDate"
+        <p-datepicker [(ngModel)]="funcionarioSelecionado.dataSaida"
           [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy" name="dataSaida" inputId="dataSaida">
         </p-datepicker>
       </div>

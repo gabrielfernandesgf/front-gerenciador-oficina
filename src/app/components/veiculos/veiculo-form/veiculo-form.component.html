@@ -71,6 +71,40 @@
       </div>
     </div>
 
+    <div class="acessorios-section">
+      <h5>Acessórios do Veículo</h5>
+      <div class="chip-container mb-3" *ngIf="acessoriosDoVeiculo.length > 0">
+        <p-chip
+          *ngFor="let acessorio of acessoriosDoVeiculo; let i = index"
+          [label]="acessorio.nome"
+          [removable]="true"
+          (onRemove)="removerAcessorio(i)"
+          styleClass="mr-2">
+        </p-chip>
+      </div>
+
+      <div class="p-fluid grid formgrid">
+        <div class="field col-12 md:col-4">
+          <label for="acessorioNome">Nome do Acessório: </label>
+          <input id="acessorioNome" type="text" pInputText [(ngModel)]="novoAcessorioNome" name="novoAcessorioNome" />
+        </div> <br>
+        <div class="field col-12 md:col-6">
+          <label for="acessorioDesc">Descrição: </label>
+          <textarea id="acessorioDesc" pInputTextarea [(ngModel)]="novoAcessorioDescricao" name="novoAcessorioDescricao" rows="1"></textarea>
+        </div> <br>
+        <div class="field col-12 md:col-2 flex align-items-end">
+          <p-button
+            type="button"
+            icon="pi pi-plus"
+            label="Adicionar"
+            (click)="adicionarAcessorioNaLista()"
+            styleClass="p-button-outlined w-full">
+          </p-button>
+        </div> <br>
+      </div>
+    </div>
+
+
     <div class="flex justify-content-end mt-4">
       <p-button
         type="submit"

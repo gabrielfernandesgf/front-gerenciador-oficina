@@ -1,4 +1,5 @@
 import { Modelo } from "./modelo";
+import {VeiculoAcessorio} from './veiculoAcessorio';
 
 export interface Veiculo {
   placa: string;
@@ -9,4 +10,5 @@ export interface Veiculo {
   quilometragem: number;
   identificadorPatrimonio?: string;
   modelo: Modelo;
+  veiculoAcessorios: VeiculoAcessorio[];
 }

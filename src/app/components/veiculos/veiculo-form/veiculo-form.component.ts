@@ -12,8 +12,11 @@ import {VeiculoService} from '../../../services/veiculo.service';
 import {ModeloService} from '../../../services/modelo.service';
 import {ClienteService} from '../../../services/cliente.service';
 import {Router} from '@angular/router';
-import {VeiculoDTO} from '../../../dto/veiculoDto';
 import {AutoCompleteModule} from 'primeng/autocomplete';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {Acessorio} from '../../../models/acessorio';
+import {ChipModule} from 'primeng/chip';
+import {Textarea} from 'primeng/textarea';
 
 @Component({
   selector: 'app-veiculo-form',
@@ -24,7 +27,10 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     ToastModule,
     InputTextModule,
     CardModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    MultiSelectModule,
+    ChipModule,
+    Textarea
   ],
   providers: [MessageService],
   templateUrl: './veiculo-form.component.html',
@@ -41,14 +47,18 @@ export class VeiculoFormComponent implements OnInit {
     quilometragem: null
   };
 
-  private todosClientes: Cliente[] = [];
-  private todosModelos: Modelo[] = [];
+  todosClientes: Cliente[] = [];
+  todosModelos: Modelo[] = [];
 
   sugestaoClientes: Cliente[] = [];
   sugestaoModelos: Modelo[] = [];
 
   clienteSelecionado?: Cliente;
   modeloSelecionado?: Modelo;
+
+  acessoriosDoVeiculo: Acessorio[] = [];
+  novoAcessorioNome: string = '';
+  novoAcessorioDescricao: string = ''
 
   constructor(
     private veiculoService: VeiculoService,
@@ -82,6 +92,24 @@ export class VeiculoFormComponent implements OnInit {
     );
   }
 
+  adicionarAcessorioNaLista(): void {
+    if (!this.novoAcessorioNome.trim()) {
+      this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'O nome do acessorio nao pode ser vazio.'});
+      return;
+    }
+    this.acessoriosDoVeiculo.push({
+      id: 0,
+      nome: this.novoAcessorioNome,
+      descricao: this.novoAcessorioDescricao
+    });
+    this.novoAcessorioNome = '';
+    this.novoAcessorioDescricao = '';
+  }
+
+  removerAcessorio(index: number): void {
+    this.acessoriosDoVeiculo.splice(index, 1);
+  }
+
   adicionar(): void {
     if (!this.clienteSelecionado || !this.modeloSelecionado) {
       this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'É necessário selecionar um proprietário e um modelo.' });
@@ -96,7 +124,8 @@ export class VeiculoFormComponent implements OnInit {
       anoModelo: this.veiculo.anoModelo,
       quilometragem: this.veiculo.quilometragem,
       identificadorPatrimonio: this.clienteSelecionado.nome,
-      modeloId: this.modeloSelecionado.id
+      modeloId: this.modeloSelecionado.id,
+      acessorios: this.acessoriosDoVeiculo
     };
 
     this.veiculoService.create(novoVeiculo).subscribe({
