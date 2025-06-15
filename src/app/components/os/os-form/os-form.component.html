@@ -1,0 +1,29 @@
+<h2>Nova Ordem de Serviço</h2>
+
+<form (ngSubmit)="adicionar()">
+  <div class="input-container">
+    <label for="veiculos"><strong>Veículos: </strong></label>
+    <p-listbox [options]="veiculos" optionLabel="placa" [(ngModel)]="veiculoSelecionado" name="veiculoSelecionado" [filter]="true" [style]="{'width': '300px'}" ></p-listbox>
+
+  </div>
+
+  <div class="input-container">
+    <label for="valorTotal"><strong>Valor total:</strong></label>
+    <input id="valorTotal" type="number" pInputText [(ngModel)]="valorTotal" name="valorTotal" step="0.01" min="0" required />
+
+    <label for="valorPago"><strong>Valor pago:</strong></label>
+    <input id="valorPago" type="number" pInputText [(ngModel)]="valorPago" name="valorPago" step="0.01" min="0" />
+
+    <label for="dataInicio"><strong>Data de início:</strong></label>
+    <p-datepicker id="dataInicio" [(ngModel)]="dataInicio" name="dataInicio" [minDate]="minDate" [maxDate]="maxDate"
+      [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-datepicker>
+
+    <label for="dataFim"><strong>Data de término:</strong></label>
+    <p-datepicker id="dataFim" [(ngModel)]="dataFim" name="dataFim" [minDate]="minDate" [maxDate]="maxDate"
+      [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-datepicker>
+  </div>
+  <br>
+  <button type="submit" pButton label="Salvar"></button>
+</form>
+
+<p-toast></p-toast>
