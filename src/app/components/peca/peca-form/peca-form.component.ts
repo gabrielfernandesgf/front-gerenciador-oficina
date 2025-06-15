@@ -6,6 +6,8 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { ToastModule } from 'primeng/toast';
 import { PecaService } from '../../../services/peca.service';
 import { PecaDTO } from '../../../dto/pecaDto';
+import {Card} from 'primeng/card';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-peca-form',
@@ -13,7 +15,9 @@ import { PecaDTO } from '../../../dto/pecaDto';
     FormsModule,
     FloatLabelModule,
     ButtonModule,
-    ToastModule
+    ToastModule,
+    Card,
+    InputText
   ],
   providers: [MessageService],
   templateUrl: './peca-form.component.html',
@@ -60,12 +64,12 @@ export class PecaFormComponent {
 
     this.pecaService.save(novaPeca).subscribe({
       next: () => {
-        this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Serviço adicionado com sucesso!'});
+        this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Peça cadastrada com sucesso!'});
         this.limparFormulario();
       },
       error: (err) => {
-        console.error('Erro ao adicionar o serviço.', err);
-        const errorMessage = err.error.message || 'Erro ao adicionar o serviço.';
+        console.error('Erro ao cadastrar a peça.', err);
+        const errorMessage = err.error.message || 'Erro ao cadastrar nova peça.';
         this.messageService.add({severity: 'error', summary: 'Erro', detail: errorMessage});
       }
     });

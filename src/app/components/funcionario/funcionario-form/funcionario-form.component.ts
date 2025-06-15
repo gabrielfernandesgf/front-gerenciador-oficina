@@ -8,6 +8,7 @@ import { FuncionarioService } from '../../../services/funcionario.service';
 import { FuncionarioDTO } from '../../../dto/funcionarioDto';
 import { DatePickerModule } from 'primeng/datepicker';
 import {Card} from 'primeng/card';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-funcionario-form',
@@ -17,7 +18,8 @@ import {Card} from 'primeng/card';
     ButtonModule,
     ToastModule,
     DatePickerModule,
-    Card
+    Card,
+    InputText
   ],
   providers: [MessageService],
   templateUrl: './funcionario-form.component.html',

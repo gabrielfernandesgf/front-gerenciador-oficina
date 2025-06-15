@@ -1,61 +1,82 @@
-<p-card header="Novo Cliente">
+<p-card header="Novo Cliente"> <br>
   <form #clienteForm="ngForm" (ngSubmit)="adicionar()">
 
     <!-- Seletor de Tipo -->
     <div class="field mb-4">
       <p-selectButton [options]="tiposDeClienteOpcoes" [(ngModel)]="tipoCliente" name="tipoCliente" optionLabel="label" optionValue="value"></p-selectButton>
-    </div>
+    </div> <br> <br>
 
       <div class="input-container">
-        <label for="nome">Nome: </label>
-        <input id="nome" type="text" pInputText [(ngModel)]="cliente.nome" name="nome" required/>
+        <div class="field">
+          <label for="nome"><strong>Nome:</strong></label>
+          <input id="nome" type="text" pInputText [(ngModel)]="cliente.nome" name="nome" required/>
+        </div>
 
         <ng-container *ngIf="tipoCliente === 'PF'">
-          <label for="cpf">CPF: </label>
-          <input id="cpf" type="text" pInputText [(ngModel)]="cliente.cpf" name="cpf"  required />
 
-          <label for="dataDeNascimento">Data de Nascimento: </label>
-          <input id="dataDeNascimento" type="text" pInputText [(ngModel)]="cliente.dataDeNascimento" name="dataDeNascimento" />
+          <div class="field">
+            <label for="cpf"><strong>CPF:</strong></label>
+            <input id="cpf" type="text" pInputText [(ngModel)]="cliente.cpf" name="cpf"  required />
+          </div>
+
+          <div class="field">
+            <label for="dataDeNascimento"><strong>Data de Nascimento:</strong></label>
+            <p-datepicker id="dataDeNascimento" [(ngModel)]="cliente.dataDeNascimento" name="dataDeNascimento"
+                          [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-datepicker>
+          </div>
+<!--          <label for="dataDeNascimento">Data de Nascimento: </label>-->
+<!--          <input id="dataDeNascimento" type="text" pInputText [(ngModel)]="cliente.dataDeNascimento" name="dataDeNascimento" />-->
         </ng-container>
 
         <ng-container *ngIf="tipoCliente === 'PJ'">
-          <label for="cnpj">CNPJ:  </label>
-          <input id="cnpj" type="text" pInputText [(ngModel)]="cliente.cnpj" name="cnpj" required />
-
-          <label for="razaoSocial">Razão Social: </label>
-          <input id="razaoSocial" type="text" pInputText [(ngModel)]="cliente.razaoSocial" name="razaoSocial" required/>
-
+          <div class="field">
+            <label for="cnpj"><strong>CNPJ:</strong></label>
+            <input id="cnpj" type="text" pInputText [(ngModel)]="cliente.cnpj" name="cnpj" required />
+          </div>
+          <div class="field">
+            <label for="razaoSocial"><strong>Razão Social:</strong></label>
+            <input id="razaoSocial" type="text" pInputText [(ngModel)]="cliente.razaoSocial" name="razaoSocial" required/>
+          </div>
         </ng-container>
 
-        <label for="email">Email: </label>
-        <input id="email" type="text" pInputText [(ngModel)]="cliente.email" name="email" required />
+        <div class="field">
+          <label for="email"><strong>Email:</strong></label>
+          <input id="email" type="text" pInputText [(ngModel)]="cliente.email" name="email" required />
+        </div>
 
       </div>
 
     <div class="input-container">
 
-      <label for="telefone">Telefone: </label>
-      <input id="telefone" type="text" pInputText [(ngModel)]="cliente.telefone" name="telefone" required />
-
-      <label for="cep">CEP: </label>
-      <input id="cep" type="text" pInputText [(ngModel)]="cliente.cep" name="cep" required />
-
-      <label for="endereco">Endereço: </label>
-      <input id="endereco" type="text" pInputText [(ngModel)]="cliente.endereco" name="endereco" required />
-
+      <div class="field">
+        <label for="telefone"><strong>Telefone:</strong></label>
+        <input id="telefone" type="text" pInputText [(ngModel)]="cliente.telefone" name="telefone" required />
+      </div>
+      <div class="field">
+        <label for="cep"><strong>CEP:</strong></label>
+        <input id="cep" type="text" pInputText [(ngModel)]="cliente.cep" name="cep" required />
+      </div>
+      <div class="field">
+        <label for="endereco"><strong>Endereço:</strong></label>
+        <input id="endereco" type="text" pInputText [(ngModel)]="cliente.endereco" name="endereco" required />
+      </div>
 
     </div>
 
     <div class="input-container">
       <ng-container *ngIf="tipoCliente === 'PJ'">
-        <label for="inscricaoSocial">Inscrição Estadual: </label>
-        <input id="inscricaoSocial" type="text" pInputText [(ngModel)]="cliente.inscricaoSocial" name="inscricaoSocial" required/>
-
-        <label for="nomeResposavel">Nome do Responsavel: </label>
-        <input id="nomeResposavel" type="text" pInputText [(ngModel)]="cliente.nomeResposavel" name="nomeResposavel" required/>
-
-        <label for="contatoResponsavel">Contato do Responsavel: </label>
-        <input id="contatoResponsavel" type="text" pInputText [(ngModel)]="cliente.contatoResponsavel" name="contatoResponsavel" required />
+        <div class="field">
+          <label for="inscricaoSocial"><strong>Inscrição Estadual:</strong></label>
+          <input id="inscricaoSocial" type="text" pInputText [(ngModel)]="cliente.inscricaoSocial" name="inscricaoSocial" required/>
+        </div>
+        <div class="field">
+          <label for="nomeResposavel"><strong>Nome do Responsavel:</strong></label>
+          <input id="nomeResposavel" type="text" pInputText [(ngModel)]="cliente.nomeResposavel" name="nomeResposavel" required/>
+        </div>
+        <div class="field">
+          <label for="contatoResponsavel"><strong>Contato do Responsavel:</strong></label>
+          <input id="contatoResponsavel" type="text" pInputText [(ngModel)]="cliente.contatoResponsavel" name="contatoResponsavel" required />
+        </div>
 
       </ng-container>
     </div>

@@ -12,6 +12,7 @@ import { ClienteService } from '../../../services/cliente.service';
 import { PessoaFisicaDTO } from '../../../dto/PessoaFisicaDTO';
 import { PessoaJuridicaDTO } from '../../../dto/PessoaJuridicaDTO';
 import { CardModule } from 'primeng/card';
+import {DatePicker} from 'primeng/datepicker';
 
 @Component({
   selector: 'app-cliente-form',
@@ -23,7 +24,8 @@ import { CardModule } from 'primeng/card';
     ToastModule,
     InputTextModule,
     SelectButtonModule,
-    CardModule
+    CardModule,
+    DatePicker
   ],
   providers: [MessageService],
   templateUrl: './cliente-form.component.html',
