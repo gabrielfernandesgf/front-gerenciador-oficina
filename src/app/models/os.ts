@@ -2,7 +2,7 @@ import { Status } from "./status";
 import { Veiculo } from "./veiculo";
 
 export interface OS {
-  id?: number;
+  id: number;
   status: Status;
   dataInicio: string;
   dataFim: string;
