@@ -20,7 +20,7 @@ export class VeiculoService {
     return this.http.get<Veiculo>(`${this.apiUrl}/${placa}`);
   }
 
-  save(dto: VeiculoDTO): Observable<Veiculo> {
+  create(dto: VeiculoDTO): Observable<Veiculo> {
     return this.http.post<Veiculo>(this.apiUrl, dto);
   }
 

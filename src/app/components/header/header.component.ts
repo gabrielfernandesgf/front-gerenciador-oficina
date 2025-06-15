@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
         {
           label: 'Ordem de serviço',
           icon: 'pi pi-list-check',
-          routerLink: ['/ordemDeServico']
+          routerLink: ['/ordensDeServico']
         },
         {
           label: 'Clientes',
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
         {
             label: 'Veículos',
             icon: 'pi pi-car',
-            routerLink: ['/home']
+            routerLink: ['/veiculos']
         },
         {
             label: 'Marcas',

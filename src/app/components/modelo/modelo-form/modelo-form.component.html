@@ -1,19 +1,34 @@
-<h2>Novo Modelo</h2>
-<form (ngSubmit)="adicionar()">
-  <div class="input-container">
-    <label for="nome"><strong>Nome: </strong></label>
-    <input id="nome" type="text" pInputText [(ngModel)]="nome" name="nome" required />
+<p-card header="Novo Modelo">
+  <form #modeloForm="ngForm" (ngSubmit)="adicionar()">
+    <div class="input-container">
+      <div class="field">
+        <label for="nome"><strong>Nome: </strong></label>
+        <input id="nome" type="text" pInputText [(ngModel)]="nome" name="nome" required />
+      </div>
+      <div class="field">
+        <label for="descricao"><strong>Descrição: </strong></label>
+        <input id="descricao" type="text" pInputText [(ngModel)]="descricao" name="descricao" required />
+      </div>
+    </div>
 
-    <label for="descricao"><strong>Descrição: </strong></label>
-    <input id="descricao" type="text" pInputText [(ngModel)]="descricao" name="descricao" required />
-  </div>
+    <div class="field">
+      <label for="cliente"><strong>Marca:</strong></label> <br><br>
+      <p-autoComplete
+        [(ngModel)]="marcaSelecionada"
+        name="marcaSelecionada"
+        [suggestions]="marcaSugestao"
+        (completeMethod)="searchMarca($event)"
+        field="nome"
+        [dropdown]="true"
+        forceSelection="true"
+        placeholder="Digite o nome da Marca"
+        styleClass="w-full"
+        required>
+      </p-autoComplete>
+    </div> <br>
 
-  <div class="input-container">
-    <label for="marca"><strong>Marca: </strong></label>
-    <p-listbox [options]="marcas" optionLabel="nome" [(ngModel)]="marcaSelecionada" name="marcaSelecionada" [filter]="true" [style]="{'width': '300px'}" ></p-listbox>
-  </div>
-
-  <button type="submit" pButton label="Adicionar"></button>
-</form>
+    <button type="submit" pButton label="Adicionar"></button>
+  </form>
+</p-card>
 
 <p-toast></p-toast>

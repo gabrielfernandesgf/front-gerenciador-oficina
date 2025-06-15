@@ -10,6 +10,9 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { Modelo } from '../../../models/modelo';
 import { ModeloService } from '../../../services/modelo.service';
+import { ListboxModule } from 'primeng/listbox';
+import { Marca } from '../../../models/marca';
+import { MarcaService } from '../../../services/marca.service';
 
 @Component({
   selector: 'app-modelo-list',
@@ -21,13 +24,15 @@ import { ModeloService } from '../../../services/modelo.service';
     DialogModule,
     FormsModule,
     ToastModule,
-    ConfirmDialog
+    ConfirmDialog,
+    ListboxModule
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './modelo-list.component.html',
   styleUrl: './modelo-list.component.css'
 })
 export class ModeloListComponent {
+  marcas: Marca[] = [];
   modelos: Modelo[] = [];
   displayDialogView: boolean = false;
   displayDialogEdit: boolean = false;
@@ -36,12 +41,19 @@ export class ModeloListComponent {
   router: any;
   errorMessage: string = '';
 
-  constructor(private modeloService: ModeloService, private messageService: MessageService,
-              private confirmationService: ConfirmationService) {}
+  constructor(private modeloService: ModeloService, private marcaService: MarcaService,
+              private messageService: MessageService, private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
     this.modeloService.findAll().subscribe((response: Modelo[]) => {
       this.modelos = response;
+    });
+    this.marcaService.findAll().subscribe({
+      next: (response) => this.marcas = response,
+      error: (err) => {
+        console.error('Erro ao buscar marcas', err);
+        this.messageService.add({severity: 'error', summary: 'Erro', detail: 'Erro ao buscar as marcas.'});
+      }
     });
   }
 
