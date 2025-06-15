@@ -6,6 +6,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { MarcaService } from '../../../services/marca.service';
 import { MarcaDTO } from '../../../dto/marcaDto';
+import {Card} from 'primeng/card';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-marca-form',
@@ -13,7 +15,9 @@ import { MarcaDTO } from '../../../dto/marcaDto';
     FormsModule,
     FloatLabelModule,
     ButtonModule,
-    ToastModule
+    ToastModule,
+    Card,
+    InputText
   ],
   providers: [MessageService],
   templateUrl: './marca-form.component.html',

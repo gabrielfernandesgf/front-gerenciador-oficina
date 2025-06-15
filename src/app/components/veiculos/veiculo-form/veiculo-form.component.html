@@ -1,0 +1,85 @@
+<p-card header="Novo Veículo">
+  <form #veiculoForm="ngForm" (ngSubmit)="adicionar()">
+
+    <div class="input-container">
+      <div class="field">
+        <label for="placa"><strong>Placa:</strong></label>
+        <input id="placa" type="text" pInputText [(ngModel)]="veiculo.placa" name="placa" required />
+      </div>
+
+      <div class="field">
+        <label for="chassi"><strong>Chassi:</strong></label>
+        <input id="chassi" type="text" pInputText [(ngModel)]="veiculo.chassi" name="chassi" required />
+      </div>
+
+      <div class="field">
+        <label for="renavan"><strong>Renavan:</strong></label>
+        <input id="renavan" type="text" pInputText [(ngModel)]="veiculo.renavan" name="renavan" required />
+      </div>
+    </div>
+
+    <div class="input-container">
+      <div class="field">
+        <label for="anoFabricacao"><strong>Ano Fabricação:</strong></label>
+        <input id="anoFabricacao" type="number" pInputText [(ngModel)]="veiculo.anoFabricacao" name="anoFabricacao" required />
+      </div>
+
+      <div class="field">
+        <label for="anoModelo"><strong>Ano Modelo:</strong></label>
+        <input id="anoModelo" type="number" pInputText [(ngModel)]="veiculo.anoModelo" name="anoModelo" required />
+      </div>
+
+      <div class="field">
+        <label for="quilometragem"><strong>Quilometragem:</strong></label>
+        <input id="quilometragem" type="number" pInputText [(ngModel)]="veiculo.quilometragem" name="quilometragem" required />
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="input-container">
+      <div class="field">
+        <label for="cliente"><strong>Proprietário (Patrimônio):</strong></label>
+        <p-autoComplete
+          [(ngModel)]="clienteSelecionado"
+          name="clienteSelecionado"
+          [suggestions]="sugestaoClientes"
+          (completeMethod)="searchCliente($event)"
+          field="nome"
+          [dropdown]="true"
+          forceSelection="true"
+          placeholder="Digite o nome do Cliente"
+          styleClass="w-full"
+          required>
+        </p-autoComplete>
+      </div>
+
+      <div class="field">
+        <label for="modelo"><strong>Modelo:</strong></label>
+        <p-autoComplete
+          [(ngModel)]="modeloSelecionado"
+          name="modeloSelecionado"
+          [suggestions]="sugestaoModelos"
+          (completeMethod)="searchModelo($event)"
+          field="nome"
+          [dropdown]="true"
+          forceSelection="true"
+          placeholder="Digite o modelo"
+          styleClass="w-full"
+          required>
+        </p-autoComplete>
+      </div>
+    </div>
+
+    <div class="flex justify-content-end mt-4">
+      <p-button
+        type="submit"
+        label="Adicionar Veículo"
+        icon="pi pi-check"
+        [disabled]="!veiculoForm.form.valid || !clienteSelecionado || !modeloSelecionado">
+      </p-button>
+    </div>
+  </form>
+</p-card>
+
+<p-toast></p-toast>

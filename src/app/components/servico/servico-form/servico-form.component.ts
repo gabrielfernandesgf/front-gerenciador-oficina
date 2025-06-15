@@ -6,6 +6,8 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { ToastModule } from 'primeng/toast';
 import { ServicoService } from '../../../services/servico.service';
 import { ServicoDTO } from '../../../dto/servicoDto';
+import {Card} from 'primeng/card';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-servico-form',
@@ -13,7 +15,9 @@ import { ServicoDTO } from '../../../dto/servicoDto';
     FormsModule,
     FloatLabelModule,
     ButtonModule,
-    ToastModule
+    ToastModule,
+    Card,
+    InputText
   ],
   providers: [MessageService],
   templateUrl: './servico-form.component.html',
