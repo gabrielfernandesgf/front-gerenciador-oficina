@@ -12,6 +12,11 @@ import { Status } from '../../../models/status';
 import { ListboxModule } from 'primeng/listbox';
 import { Veiculo } from '../../../models/veiculo';
 import { VeiculoService } from '../../../services/veiculo.service';
+import { PecaSubstituirDTO } from '../../../dto/pecaSubstituirDto';
+import { ServicoExecutadoDTO } from '../../../dto/servicoExecutadoDto';
+import { PecaSubstituirComponent } from '../../pecaSubstituir/peca-substituir/peca-substituir.component';
+import { ServicoExecutadoComponent } from '../../servicoExecutado/servico-executado/servico-executado.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-os-form',
@@ -22,7 +27,10 @@ import { VeiculoService } from '../../../services/veiculo.service';
     ToastModule,
     DatePickerModule,
     DropdownModule,
-    ListboxModule
+    ListboxModule,
+    PecaSubstituirComponent,
+    ServicoExecutadoComponent,
+    CommonModule
   ],
   providers: [MessageService],
   templateUrl: './os-form.component.html',
@@ -41,6 +49,9 @@ export class OsFormComponent implements OnInit {
   statusList: { label: string, value: Status }[] = [];
   veiculos: Veiculo[] = [];
   veiculoSelecionado?: Veiculo;
+
+  pecasSubstituir: PecaSubstituirDTO[] = [];
+  servicosExecutados: ServicoExecutadoDTO[] = [];
 
   constructor(
     private osService: OsService,
@@ -71,6 +82,12 @@ export class OsFormComponent implements OnInit {
     });
   }
 
+  atualizarValorTotal() {
+    const totalPecas = this.pecasSubstituir.reduce((acc, p) => acc + (p.quantidade * p.valorUnitario), 0);
+    const totalServicos = this.servicosExecutados.reduce((acc, s) => acc + (s.quantidade * s.valorUnitario), 0);
+    this.valorTotal = totalPecas + totalServicos;
+  }
+
   adicionar() {
     if (!this.veiculoSelecionado) {
       this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Selecione um veículo.' });
@@ -87,7 +104,9 @@ export class OsFormComponent implements OnInit {
       valorPago: this.valorPago,
       dataInicio: this.dataInicio.toISOString().split('T')[0],
       dataFim: this.dataFim ? this.dataFim.toISOString().split('T')[0] : '',
-      status: this.status
+      status: this.status,
+      pecasSubstituir: this.pecasSubstituir,
+      servicosExecutados: this.servicosExecutados
     };
 
     this.osService.save(novaOs).subscribe({

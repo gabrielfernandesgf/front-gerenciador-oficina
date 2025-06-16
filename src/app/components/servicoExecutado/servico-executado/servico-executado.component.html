@@ -1,0 +1,13 @@
+<div *ngFor="let servico of servicos; let i = index" class="servico-item">
+  <p-dropdown [options]="servicosDisponiveis" optionLabel="nome" [(ngModel)]="servico.servicoId" (onChange)="atualizarDadosServico(i)"
+    placeholder="Selecione o serviço" name="servicoSelecionado{{i}}"> </p-dropdown>
+
+  <label>Quantidade:</label>
+  <input [(ngModel)]="servico.quantidade" type="number" pInputText placeholder="Quantidade" name="quantidadeServico{{i}}" (input)="emitirAlteracao()">
+
+  <label>Valor total: {{ servico.valorUnitario | currency:'BRL' }}</label>
+
+  <button type="button" pButton severity="danger" (click)="remover(i)">Remover</button>
+</div>
+
+<button type="button" pButton severity="secondary" (click)="adicionar()">Adicionar serviço</button>

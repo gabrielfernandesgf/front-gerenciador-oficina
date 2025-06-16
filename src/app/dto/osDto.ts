@@ -1,4 +1,6 @@
 import { Status } from "../models/status";
+import { PecaSubstituirDTO } from "./pecaSubstituirDto";
+import { ServicoExecutadoDTO } from "./servicoExecutadoDto";
 
 export interface OSDTO {
   status: Status;
@@ -7,4 +9,6 @@ export interface OSDTO {
   valorTotal: number;
   valorPago: number;
   placaVeiculo: string;
+  pecasSubstituir?: PecaSubstituirDTO[];
+  servicosExecutados?: ServicoExecutadoDTO[];
 }
