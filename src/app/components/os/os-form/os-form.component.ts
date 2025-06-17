@@ -12,6 +12,16 @@ import { Status } from '../../../models/status';
 import { ListboxModule } from 'primeng/listbox';
 import { Veiculo } from '../../../models/veiculo';
 import { VeiculoService } from '../../../services/veiculo.service';
+import { PecaSubstituirDTO } from '../../../dto/pecaSubstituirDto';
+import { ServicoExecutadoDTO } from '../../../dto/servicoExecutadoDto';
+import { PecaSubstituirComponent } from '../../pecaSubstituir/peca-substituir/peca-substituir.component';
+import { ServicoExecutadoComponent } from '../../servicoExecutado/servico-executado/servico-executado.component';
+import { CommonModule } from '@angular/common';
+import {InputText} from 'primeng/inputtext';
+import {AutoComplete} from 'primeng/autocomplete';
+import {Cliente} from '../../../models/cliente';
+import {ClienteService} from '../../../services/cliente.service';
+import {Card} from 'primeng/card';
 
 @Component({
   selector: 'app-os-form',
@@ -22,7 +32,13 @@ import { VeiculoService } from '../../../services/veiculo.service';
     ToastModule,
     DatePickerModule,
     DropdownModule,
-    ListboxModule
+    ListboxModule,
+    PecaSubstituirComponent,
+    ServicoExecutadoComponent,
+    CommonModule,
+    InputText,
+    AutoComplete,
+    Card
   ],
   providers: [MessageService],
   templateUrl: './os-form.component.html',
@@ -41,10 +57,28 @@ export class OsFormComponent implements OnInit {
   statusList: { label: string, value: Status }[] = [];
   veiculos: Veiculo[] = [];
   veiculoSelecionado?: Veiculo;
+  sugestaoVeiculos: Veiculo[] = [];
+  todosVeiculos: Veiculo[] = [];
+  veiculosDoCliente: Veiculo[] = [];
+
+  pecasSubstituir: PecaSubstituirDTO[] = [];
+  servicosExecutados: ServicoExecutadoDTO[] = [];
+
+  todosClientes: Cliente[] = [];
+  sugestaoClientes: Cliente[] = [];
+  clienteSelecionado?: Cliente;
+
+  public get valorPendente(): number {
+    const total = this.valorTotal || 0;
+    const pago = this.valorPago || 0;
+    return total - pago;
+  }
+
 
   constructor(
     private osService: OsService,
     private veiculoService: VeiculoService,
+    private clienteService: ClienteService,
     private messageService: MessageService
   ) {
     const hoje = new Date();
@@ -60,15 +94,50 @@ export class OsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.veiculoService.findAll().subscribe({
-      next: (response) => {
-        this.veiculos = response;
-      },
-      error: (err) => {
-        console.error('Erro ao buscar os veículos!', err);
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao buscar os veículos!' });
-      }
+    this.clienteService.findAll().subscribe(data => {
+      this.todosClientes = data;
     });
+
+    this.veiculoService.findAll().subscribe(data => {
+      this.todosVeiculos = data;
+    });
+  }
+
+  searchCliente(event: { query: string }): void {
+    const query = event.query.toLowerCase();
+    this.sugestaoClientes = this.todosClientes.filter(cliente =>
+      cliente.nome.toLowerCase().includes(query)
+    );
+  }
+
+  searchVeiculo(event: { query: string }): void {
+    const query = event.query.toLowerCase();
+    this.sugestaoVeiculos = this.veiculosDoCliente.filter(veiculo =>
+      veiculo.placa.toLowerCase().includes(query)
+    );
+  }
+
+  onClienteSelect(): void {
+    if (this.clienteSelecionado) {
+      this.veiculosDoCliente = this.todosVeiculos.filter(
+        veiculo => veiculo.identificadorPatrimonio === this.clienteSelecionado?.nome
+      );
+      this.sugestaoVeiculos = [...this.veiculosDoCliente];
+    }
+    this.veiculoSelecionado = undefined;
+    this.sugestaoVeiculos =[];
+  }
+
+  onClienteClear(): void {
+    this.veiculosDoCliente = [];
+    this.veiculoSelecionado = undefined;
+    this.sugestaoVeiculos = [];
+  }
+
+  atualizarValorTotal() {
+    const totalPecas = this.pecasSubstituir.reduce((acc, p) => acc + (p.quantidade * p.valorUnitario), 0);
+    const totalServicos = this.servicosExecutados.reduce((acc, s) => acc + (s.quantidade * s.valorUnitario), 0);
+    this.valorTotal = totalPecas + totalServicos;
   }
 
   adicionar() {
@@ -87,7 +156,9 @@ export class OsFormComponent implements OnInit {
       valorPago: this.valorPago,
       dataInicio: this.dataInicio.toISOString().split('T')[0],
       dataFim: this.dataFim ? this.dataFim.toISOString().split('T')[0] : '',
-      status: this.status
+      status: this.status,
+      pecasSubstituir: this.pecasSubstituir,
+      servicosExecutados: this.servicosExecutados
     };
 
     this.osService.save(novaOs).subscribe({

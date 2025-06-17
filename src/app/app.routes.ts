@@ -18,6 +18,8 @@ import {FuncionarioListComponent} from './components/funcionario/funcionario-lis
 import {FuncionarioFormComponent} from './components/funcionario/funcionario-form/funcionario-form.component';
 import {VeiculoListComponent} from './components/veiculos/veiculo-list/veiculo-list.component';
 import {VeiculoFormComponent} from './components/veiculos/veiculo-form/veiculo-form.component';
+import {OsListComponent} from './components/os/os-list/os-list.component';
+import {OsFormComponent} from './components/os/os-form/os-form.component';
 
 export const routes: Routes = [
   { path: 'clientes', component: ClienteListComponent },
@@ -39,7 +41,7 @@ export const routes: Routes = [
   { path: 'servicos', component: ServicoListComponent },
   { path: 'servico/form', component: ServicoFormComponent },
 
-  { path: 'oficina', component: OficinaListComponent },
+  { path: 'oficinas', component: OficinaListComponent },
   { path: 'oficina/form', component: OficinaFormComponent },
 
   { path: 'funcionarios', component: FuncionarioListComponent },
@@ -50,6 +52,9 @@ export const routes: Routes = [
 
   { path: 'oficinas', component: OficinaListComponent },
   { path: 'oficinas/form', component: OficinaFormComponent },
+
+  { path: 'ordensDeServico', component: OsListComponent },
+  { path: 'ordemDeServico/form', component: OsFormComponent },
 
   { path: "", redirectTo: "/home", pathMatch: 'full' },
   { path: 'home', component: HomeComponent }

@@ -1,0 +1,14 @@
+<div *ngFor="let peca of pecas; let i = index" class="peca-item">
+  <p-dropdown [options]="pecasDisponiveis" optionLabel="nome" placeholder="Selecione a peça" [(ngModel)]="pecas[i].pecaId"
+    (onChange)="aoSelecionarPeca($event.value, i)" name="pecaSelecionada{{i}}"> </p-dropdown>
+
+  <label>Quantiade: </label>
+  <input [(ngModel)]="peca.quantidade" type="number" placeholder="Quantidade" pInputText name="quantidadePeca{{i}}" (input)="emitirAlteracao()">
+
+  <label>Valor Unitário: </label>
+  <input [(ngModel)]="peca.valorUnitario" type="number" placeholder="Valor Unitário" pInputText name="valorUnitarioPeca{{i}}" (input)="emitirAlteracao()">
+
+  <button type="submit" pButton severity="danger" (click)="remover(i)">Remover</button>
+</div>
+
+<button type="submit" pButton severity="secondary" (click)="adicionar()">Adicionar peça</button>

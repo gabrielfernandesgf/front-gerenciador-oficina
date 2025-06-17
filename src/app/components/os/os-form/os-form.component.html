@@ -1,64 +1,101 @@
-<h2>Nova Ordem de Serviço</h2>
+<p-card header="" >
+  <h2>Nova Ordem de Serviço</h2>
+  <form (ngSubmit)="adicionar()">
 
-<form (ngSubmit)="adicionar()">
-  <div class="input-container">
-    <div class="field">
-      <label for="veiculos"><strong>Veículo:</strong></label>
-      <p-listbox
-        [options]="veiculos"
-        optionLabel="placa"
-        [(ngModel)]="veiculoSelecionado"
-        name="veiculoSelecionado"
-        [filter]="true">
-      </p-listbox>
+    <div class="input-container">
+      <div class="field">
+        <label for="cliente"><strong>Cliente:</strong></label>
+        <p-autoComplete
+          [(ngModel)]="clienteSelecionado"
+          name="clienteSelecionado"
+          [suggestions]="sugestaoClientes"
+          (completeMethod)="searchCliente($event)"
+          (onSelect)="onClienteSelect()" (onClear)="onClienteClear()"  field="nome"
+          [dropdown]="true"
+          forceSelection="true"
+          placeholder="Digite o nome do Cliente"
+          styleClass="w-full"
+          required>
+        </p-autoComplete>
+      </div>
+
+      <div class="field">
+        <label for="modelo"><strong>Veiculo:</strong></label>
+        <p-autoComplete
+          [(ngModel)]="veiculoSelecionado"
+          name="veiculoSelecionado"
+          [suggestions]="sugestaoVeiculos"
+          (completeMethod)="searchVeiculo($event)"
+          [disabled]="!clienteSelecionado"  field="placa"
+          [dropdown]="true"
+          forceSelection="true"
+          placeholder="Selecione um Cliente primeiro"
+          styleClass="w-full"
+          required>
+        </p-autoComplete>
+      </div>
+
+      <!--    <div class="input-container">-->
+      <!--      <div class="field">-->
+      <!--        <label for="veiculos"><strong>Veículo:</strong></label>-->
+      <!--        <p-listbox [options]="veiculos" optionLabel="placa" [(ngModel)]="veiculoSelecionado" name="veiculoSelecionado" [filter]="true"></p-listbox>-->
+      <!--      </div>-->
+      <!--    </div>-->
     </div>
-  </div>
 
-  <div class="input-container">
-    <div class="field">
-      <label for="valorTotal"><strong>Valor total:</strong></label>
-      <input id="valorTotal" type="number" pInputText [(ngModel)]="valorTotal" name="valorTotal" step="0.01" min="0" required />
+    <div class="input-container">
+      <!--
+      <div class="field">
+        <label for="valorTotal"><strong>Valor total:</strong></label>
+        <input id="valorTotal" type="number" pInputText [(ngModel)]="valorTotal" name="valorTotal" step="0.01" min="0" required />
+      </div>
+      -->
     </div>
 
-    <div class="field">
-      <label for="valorPago"><strong>Valor pago:</strong></label>
-      <input id="valorPago" type="number" pInputText [(ngModel)]="valorPago" name="valorPago" step="0.01" min="0" />
+    <div class="input-container">
+      <div class="field">
+        <label for="dataInicio"><strong>Data de início:</strong></label>
+        <p-datepicker id="dataInicio" [(ngModel)]="dataInicio" name="dataInicio" [minDate]="minDate" [maxDate]="maxDate"
+                      [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-datepicker>
+      </div>
+
+      <div class="field">
+        <label for="dataFim"><strong>Data de término:</strong></label>
+        <p-datepicker id="dataFim" [(ngModel)]="dataFim" name="dataFim" [minDate]="dataInicio"
+                      [showIcon]="true" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-datepicker>
+      </div>
     </div>
-  </div>
+    <hr>
+    <div class="input-container">
+      <app-peca-substituir [(pecas)]="pecasSubstituir" (pecasChange)="atualizarValorTotal()"></app-peca-substituir>
+    </div>
+    <hr>
+    <div class="input-container">
+      <app-servico-executado [(servicos)]="servicosExecutados" (servicosChange)="atualizarValorTotal()"></app-servico-executado>
+    </div>
+    <div class="input-container">
+      <div class="field">
+        <label><strong>Valor total calculado:</strong></label>
+        <p>{{ valorTotal | currency:'BRL' }}</p>
+      </div>
 
-  <div class="input-container">
-    <div class="field">
-      <label for="dataInicio"><strong>Data de início:</strong></label>
-      <p-datepicker
-        id="dataInicio"
-        [(ngModel)]="dataInicio"
-        name="dataInicio"
-        [minDate]="minDate"
-        [maxDate]="maxDate"
-        [showIcon]="true"
-        [readonlyInput]="true"
-        dateFormat="dd/mm/yy">
-      </p-datepicker>
+      <div class="field">
+        <label for="valorPago"><strong>Valor pago:</strong></label>
+        <input id="valorPago" type="number" pInputText [(ngModel)]="valorPago" name="valorPago" step="0.01" min="0" />
+      </div>
+
+      <div class="field">
+        <label><strong>Falta a Pagar:</strong></label>
+        <p>{{ valorPendente | currency: 'BRL'}}</p>
+      </div>
+
     </div>
 
-    <div class="field">
-      <label for="dataFim"><strong>Data de término:</strong></label>
-      <p-datepicker
-        id="dataFim"
-        [(ngModel)]="dataFim"
-        name="dataFim"
-        [minDate]="minDate"
-        [maxDate]="maxDate"
-        [showIcon]="true"
-        [readonlyInput]="true"
-        dateFormat="dd/mm/yy">
-      </p-datepicker>
+    <div class="flex justify-content-end mt-4">
+      <p-button type="submit" label="Salvar" icon="pi pi-check"></p-button>
     </div>
-  </div>
 
-  <div class="flex justify-content-end mt-4">
-    <p-button type="submit" label="Salvar" icon="pi pi-check"></p-button>
-  </div>
-</form>
+  </form>
 
+</p-card>
 <p-toast></p-toast>
