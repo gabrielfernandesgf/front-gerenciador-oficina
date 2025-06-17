@@ -6,6 +6,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { ToastModule } from 'primeng/toast';
 import { OficinaService } from '../../../services/oficina.service';
 import { OficinaDTO } from '../../../dto/oficinaDto';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-oficina-form',
@@ -13,7 +14,8 @@ import { OficinaDTO } from '../../../dto/oficinaDto';
     FormsModule,
     FloatLabelModule,
     ButtonModule,
-    ToastModule
+    ToastModule,
+    InputText
   ],
   providers: [MessageService],
   templateUrl: './oficina-form.component.html',
