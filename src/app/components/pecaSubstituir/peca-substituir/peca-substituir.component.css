@@ -1,0 +1,36 @@
+.add-peca-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dropdown-peca {
+  flex-grow: 1;
+}
+
+.peca-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.peca-item:last-child {
+  border-bottom: none;
+}
+
+.field-display {
+  flex: 2; /* Ocupa mais espaço */
+}
+
+.field-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field-edit input {
+  width: 100px;
+}

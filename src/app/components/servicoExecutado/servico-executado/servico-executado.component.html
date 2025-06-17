@@ -1,13 +1,63 @@
-<div *ngFor="let servico of servicos; let i = index" class="servico-item">
-  <p-dropdown [options]="servicosDisponiveis" optionLabel="nome" [(ngModel)]="servico.servicoId" (onChange)="atualizarDadosServico(i)"
-    placeholder="Selecione o serviço" name="servicoSelecionado{{i}}"> </p-dropdown>
+<!--<div *ngFor="let servico of servicos; let i = index" class="servico-item">-->
+<!--  <p-dropdown [options]="servicosDisponiveis" optionLabel="nome" [(ngModel)]="servico.servicoId" (onChange)="atualizarDadosServico(i)"-->
+<!--    placeholder="Selecione o serviço" name="servicoSelecionado{{i}}"> </p-dropdown>-->
 
-  <label>Quantidade:</label>
-  <input [(ngModel)]="servico.quantidade" type="number" pInputText placeholder="Quantidade" name="quantidadeServico{{i}}" (input)="emitirAlteracao()">
+<!--  <label>Quantidade:</label>-->
+<!--  <input [(ngModel)]="servico.quantidade" type="number" pInputText placeholder="Quantidade" name="quantidadeServico{{i}}" (input)="emitirAlteracao()">-->
 
-  <label>Valor total: {{ servico.valorUnitario | currency:'BRL' }}</label>
+<!--  <label>Valor total: {{ servico.valorUnitario | currency:'BRL' }}</label>-->
 
-  <button type="button" pButton severity="danger" (click)="remover(i)">Remover</button>
+<!--  <button type="button" pButton severity="danger" (click)="remover(i)">Remover</button>-->
+<!--</div>-->
+
+<!--<button type="button" pButton severity="secondary" (click)="adicionar()">Adicionar serviço</button>-->
+<div class="add-servico-toolbar">
+  <p-dropdown
+    [options]="servicosDisponiveis"
+    [(ngModel)]="servicoSelecionadoParaAdicionar"
+    optionLabel="nome"
+    placeholder="Selecione um serviço para adicionar"
+    [showClear]="true"
+    styleClass="dropdown-servico">
+  </p-dropdown>
+
+  <p-button
+    label="Adicionar serviço"
+    icon="pi pi-plus"
+    (click)="adicionar()"
+    [disabled]="!servicoSelecionadoParaAdicionar">
+  </p-button>
 </div>
 
-<button type="button" pButton severity="secondary" (click)="adicionar()">Adicionar serviço</button>
+<hr *ngIf="servicos.length > 0">
+
+<div *ngFor="let servico of servicos; let i = index" class="servico-item">
+
+  <div class="field-display">
+    <strong>Serviço:</strong>
+    <span>{{ servico.descricao }}</span>
+  </div>
+
+  <div class="field-edit">
+    <label>Quantidade:</label>
+    <input
+      [ngModel]="servico.quantidade"
+      type="number"
+      pInputText
+      name="quantidadeServico{{i}}"
+      (input)="emitirAlteracao()">
+  </div>
+
+  <div class="field-display">
+    <strong>Valor:</strong>
+    <span>{{ servico.valorUnitario | currency: 'BRL' }}</span>
+  </div>
+
+  <p-button
+    icon="pi pi-trash"
+    severity="danger"
+    (click)="remover(i)"
+    styleClass="p-button-rounded p-button-text">
+  </p-button>
+
+</div>

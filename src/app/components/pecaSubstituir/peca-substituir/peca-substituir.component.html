@@ -1,14 +1,69 @@
-<div *ngFor="let peca of pecas; let i = index" class="peca-item">
-  <p-dropdown [options]="pecasDisponiveis" optionLabel="nome" placeholder="Selecione a peça" [(ngModel)]="pecas[i].pecaId"
-    (onChange)="aoSelecionarPeca($event.value, i)" name="pecaSelecionada{{i}}"> </p-dropdown>
+<!--<div *ngFor="let peca of pecas; let i = index" class="peca-item">-->
+<!--  <p-dropdown [options]="pecasDisponiveis" optionLabel="nome" placeholder="Selecione a peça" [(ngModel)]="pecas[i].pecaId"-->
+<!--    (onChange)="aoSelecionarPeca($event.value, i)" name="pecaSelecionada{{i}}"> </p-dropdown>-->
 
-  <label>Quantiade: </label>
-  <input [(ngModel)]="peca.quantidade" type="number" placeholder="Quantidade" pInputText name="quantidadePeca{{i}}" (input)="emitirAlteracao()">
+<!--  <label>Quantiade: </label>-->
+<!--  <input [(ngModel)]="peca.quantidade" type="number" placeholder="Quantidade" pInputText name="quantidadePeca{{i}}" (input)="emitirAlteracao()">-->
 
-  <label>Valor Unitário: </label>
-  <input [(ngModel)]="peca.valorUnitario" type="number" placeholder="Valor Unitário" pInputText name="valorUnitarioPeca{{i}}" (input)="emitirAlteracao()">
+<!--  <label>Valor Unitário: </label>-->
+<!--  <input [(ngModel)]="peca.valorUnitario" type="number" placeholder="Valor Unitário" pInputText name="valorUnitarioPeca{{i}}" (input)="emitirAlteracao()">-->
 
-  <button type="submit" pButton severity="danger" (click)="remover(i)">Remover</button>
+<!--  <button type="submit" pButton severity="danger" (click)="remover(i)">Remover</button>-->
+<!--</div>-->
+
+<!--<button type="submit" pButton severity="secondary" (click)="adicionar()">Adicionar peça</button>-->
+
+
+<div class="add-peca-toolbar">
+  <p-dropdown
+    [options]="pecasDisponiveis"
+    [(ngModel)]="pecaSelecionadaParaAdicionar"
+    optionLabel="nome"
+    placeholder="Selecione uma peça para adicionar"
+    [showClear]="true"
+    styleClass="dropdown-peca">
+  </p-dropdown>
+
+  <p-button
+    label="Adicionar peça"
+    icon="pi pi-plus"
+    (click)="adicionar()"
+    [disabled]="!pecaSelecionadaParaAdicionar">
+  </p-button>
 </div>
 
-<button type="submit" pButton severity="secondary" (click)="adicionar()">Adicionar peça</button>
+<hr *ngIf="pecas.length > 0">
+<div *ngFor="let peca of pecas; let i = index" class="peca-item">
+
+  <div class="field-display">
+    <strong>Peça:</strong>
+    <span>{{ peca.descricao }}</span>
+  </div>
+
+  <div class="field-edit">
+    <label>Quantidade:</label>
+    <input
+      [(ngModel)]="peca.quantidade"
+      type="number"
+      pInputText
+      name="quantidadePeca{{i}}"
+      (input)="emitirAlteracao()">
+  </div>
+
+  <div class="field-edit">
+    <label>Valor Unitário:</label>
+    <input
+      [(ngModel)]="peca.valorUnitario"
+      type="number"
+      pInputText
+      name="valorUnitarioPeca{{i}}"
+      (input)="emitirAlteracao()">
+  </div>
+
+  <p-button
+    icon="pi pi-trash"
+    severity="danger"
+    (click)="remover(i)"
+    styleClass="p-button-rounded p-button-text">
+  </p-button>
+</div>

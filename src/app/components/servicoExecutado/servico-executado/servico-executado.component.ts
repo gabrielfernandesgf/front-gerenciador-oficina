@@ -26,6 +26,8 @@ export class ServicoExecutadoComponent {
 
   servicosDisponiveis: Servico[] = [];
 
+  servicoSelecionadoParaAdicionar: Servico | null = null;
+
   constructor(private servicoService: ServicoService) {}
 
   ngOnInit() {
@@ -40,29 +42,35 @@ export class ServicoExecutadoComponent {
   }
 
   adicionar() {
-    this.servicos.push({
+    if (!this.servicoSelecionadoParaAdicionar) {
+      return;
+    }
+
+    const novoServico: ServicoExecutadoDTO = {
+      servicoId: this.servicoSelecionadoParaAdicionar.id,
+      descricao: this.servicoSelecionadoParaAdicionar.nome,
+      quantidade: 1,
+      valorUnitario: this.servicoSelecionadoParaAdicionar.valorUnitario,
       dataInicio: '',
       dataFim: '',
-      quantidade: 1,
-      valorUnitario: 0,
-      descricao: '',
       osId: 0,
-      servicoId: 0,
       funcionarioId: 0
-    });
+    };
+    this.servicos.push(novoServico);
+    this.servicoSelecionadoParaAdicionar = null;
     this.emitirAlteracao();
   }
 
-  atualizarDadosServico(index: number) {
-    const servicoIdSelecionado = this.servicos[index].servicoId;
-    const servicoSelecionado = this.servicosDisponiveis.find(s => s.id === servicoIdSelecionado);
-
-    if (servicoSelecionado) {
-      this.servicos[index].descricao = servicoSelecionado.descricao;
-      this.servicos[index].valorUnitario = servicoSelecionado.valorUnitario;
-    }
-    this.emitirAlteracao();
-  }
+  // atualizarDadosServico(index: number) {
+  //   const servicoIdSelecionado = this.servicos[index].servicoId;
+  //   const servicoSelecionado = this.servicosDisponiveis.find(s => s.id === servicoIdSelecionado);
+  //
+  //   if (servicoSelecionado) {
+  //     this.servicos[index].descricao = servicoSelecionado.descricao;
+  //     this.servicos[index].valorUnitario = servicoSelecionado.valorUnitario;
+  //   }
+  //   this.emitirAlteracao();
+  // }
 
   remover(index: number) {
     this.servicos.splice(index, 1);

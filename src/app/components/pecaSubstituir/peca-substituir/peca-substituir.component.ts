@@ -26,6 +26,8 @@ export class PecaSubstituirComponent implements OnInit {
 
   pecasDisponiveis: Peca[] = [];
 
+  pecaSelecionadaParaAdicionar: Peca | null = null;
+
   constructor(private pecaService: PecaService) {}
 
   ngOnInit() {
@@ -40,13 +42,20 @@ export class PecaSubstituirComponent implements OnInit {
   }
 
   adicionar() {
-    this.pecas.push({
-      descricao: '',
+    if (!this.pecaSelecionadaParaAdicionar) {
+      return;
+    }
+
+    const novaPeca: PecaSubstituirDTO = {
+      pecaId: this.pecaSelecionadaParaAdicionar.id,
+      descricao: this.pecaSelecionadaParaAdicionar.nome,
       quantidade: 1,
-      valorUnitario: 0,
-      osId: 0,
-      pecaId: 0
-    });
+      valorUnitario: this.pecaSelecionadaParaAdicionar.valorUnitario,
+      osId: 0
+    };
+
+    this.pecas.push(novaPeca);
+    this.pecaSelecionadaParaAdicionar = null;
     this.emitirAlteracao();
   }
 
@@ -55,12 +64,12 @@ export class PecaSubstituirComponent implements OnInit {
     this.emitirAlteracao();
   }
 
-  aoSelecionarPeca(pecaSelecionada: Peca, index: number) {
-    this.pecas[index].pecaId = pecaSelecionada.id;
-    this.pecas[index].descricao = pecaSelecionada.nome;
-    this.pecas[index].valorUnitario = pecaSelecionada.valorUnitario;
-    this.emitirAlteracao();
-  }
+  // aoSelecionarPeca(pecaSelecionada: Peca, index: number) {
+  //   this.pecas[index].pecaId = pecaSelecionada.id;
+  //   this.pecas[index].descricao = pecaSelecionada.nome;
+  //   this.pecas[index].valorUnitario = pecaSelecionada.valorUnitario;
+  //   this.emitirAlteracao();
+  // }
 
   emitirAlteracao() {
     this.pecasChange.emit(this.pecas);

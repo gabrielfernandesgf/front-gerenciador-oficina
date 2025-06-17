@@ -1,0 +1,38 @@
+.add-servico-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dropdown-servico {
+  flex-grow: 1;
+}
+
+.servico-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.servico-item:last-child {
+  border-bottom: none;
+}
+
+.field-display {
+  flex: 2; /* Ocupa mais espaço */
+  display: flex;
+  flex-direction: column;
+}
+
+.field-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field-edit input {
+  width: 100px;
+}
